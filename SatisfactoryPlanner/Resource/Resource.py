@@ -7,6 +7,18 @@ class Resource:
         return self.__class__
 
 
+class AdaptiveControlUnit(Resource):
+    pass
+
+
+class AILimiter(Resource):
+    pass
+
+
+class AlcladAluminumSheet(Resource):
+    pass
+
+
 class AlienDNACapsule(Resource):
     pass
 
@@ -27,7 +39,19 @@ class AluminumScrap(Resource):
     pass
 
 
+class AssemblyDirectorSystem(Resource):
+    pass
+
+
+class AutomatedWiring(Resource):
+    pass
+
+
 class Biomass(Resource):
+    pass
+
+
+class BlackPowder(Resource):
     pass
 
 
@@ -43,12 +67,33 @@ class CateriumIngot(Resource):
     pass
 
 
+class CircuitBoard(Resource):
+    pass
+
+
+class ClusterNobelisk(Resource):
+    pass
+
+
 class ColorCartridge(Resource):
+    pass
+
+
+class CompactedCoal(Resource):
+    pass
+
+
+class Computer(Resource):
     pass
 
 
 class Concrete(Resource):
     pass
+
+
+class CoolingSystem(Resource):
+    pass
+
 
 class CopperIngot(Resource):
     pass
@@ -62,6 +107,14 @@ class CopperSheet(Resource):
     pass
 
 
+class CrystalOscillator(Resource):
+    pass
+
+
+class ElectromagneticControlRod(Resource):
+    pass
+
+
 class EmptyCanister(Resource):
     pass
 
@@ -70,7 +123,27 @@ class EmptyFluidTank(Resource):
     pass
 
 
+class EncasedIndustrialBeam(Resource):
+    pass
+
+
+class EncasedPlutoniumCell(Resource):
+    pass
+
+
+class Fabric(Resource):
+    pass
+
+
 class FlowerPetals(Resource):
+    pass
+
+
+class FusedModularFrame(Resource):
+    pass
+
+
+class GasNobelisk(Resource):
     pass
 
 
@@ -78,7 +151,19 @@ class HatcherRemains(Resource):
     pass
 
 
+class HeatSink(Resource):
+    pass
+
+
+class HighSpeedConnector(Resource):
+    pass
+
+
 class HogRemains(Resource):
+    pass
+
+
+class HomingRifleAmmo(Resource):
     pass
 
 
@@ -102,7 +187,23 @@ class Leaves(Resource):
     pass
 
 
+class ModularFrame(Resource):
+    pass
+
+
+class Motor(Resource):
+    pass
+
+
 class Mycelia(Resource):
+    pass
+
+
+class Nobelisk(Resource):
+    pass
+
+
+class PetroleumCoke(Resource):
     pass
 
 
@@ -114,7 +215,23 @@ class Plastic(Resource):
     pass
 
 
+class PlutoniumFuelRod(Resource):
+    pass
+
+
+class PlutoniumPellet(Resource):
+    pass
+
+
 class PowerShard(Resource):
+    pass
+
+
+class PressureConversionCube(Resource):
+    pass
+
+
+class PulseNobelisk(Resource):
     pass
 
 
@@ -130,7 +247,31 @@ class Quickwire(Resource):
     pass
 
 
+class RadioControlUnit(Resource):
+    pass
+
+
+class ReinforcedIronPlate(Resource):
+    pass
+
+
+class RifleAmmo(Resource):
+    pass
+
+
+class Rotor(Resource):
+    pass
+
+
+class Rubber(Resource):
+    pass
+
+
 class Screw(Resource):
+    pass
+
+
+class ShatterRebar(Resource):
     pass
 
 
@@ -138,7 +279,19 @@ class Silica(Resource):
     pass
 
 
+class SmartPlating(Resource):
+    pass
+
+
+class SmokelessPowder(Resource):
+    pass
+
+
 class SolidBiofuel(Resource):
+    pass
+
+
+class Stator(Resource):
     pass
 
 
@@ -155,6 +308,18 @@ class SteelPipe(Resource):
 
 
 class StingerRemains(Resource):
+    pass
+
+
+class StunRebar(Resource):
+    pass
+
+
+class Supercomputer(Resource):
+    pass
+
+
+class VersatileFramework(Resource):
     pass
 
 

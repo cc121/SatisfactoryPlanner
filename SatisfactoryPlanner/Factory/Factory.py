@@ -29,13 +29,13 @@ class Factory:
                     if remaining_capacity >= 0:
                         # We consumed all the available capacity with no capacity left from
                         # the input source
-                        input_source.consume_capacity(resource, desired_capacity)
+                        input_source.consume_capacity(resource, available_capacity)
                         desired_capacity = remaining_capacity
                     else:
                         # There is available capacity left from the source and we didn't have to
                         # consume it all
+                        input_source.consume_capacity(resource, desired_capacity)
                         desired_capacity = 0
-                        input_source.consume_capacity(resource, -1 * remaining_capacity)
 
                     if desired_capacity == 0:
                         break
@@ -49,17 +49,18 @@ class Factory:
                     remaining_capacity = desired_capacity - available_capacity
                     if remaining_capacity >= 0:
                         # We consumed all the available capacity with no capacity left in the factory
-                        self.consume_capacity(resource, desired_capacity)
+                        self.consume_capacity(resource, available_capacity)
                         desired_capacity = remaining_capacity
                     else:
                         # There is available capacity left in the factory and we didn't have to
                         # consume it all
+                        self.consume_capacity(resource, desired_capacity)
                         desired_capacity = 0
-                        self.consume_capacity(resource, -1 * remaining_capacity)
 
                     if desired_capacity != 0:
-                        raise ValueError("Not enough capacity found in sources!")
-
+                        raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need {desired_capacity}/minute more.")
+                else:
+                    raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need {desired_capacity}/minute more.")
         # Update factory output consumption
         for resource, output_capacity in machine.get_production_rates().items():
             current_capacity = self.capacity.get(resource, 0)

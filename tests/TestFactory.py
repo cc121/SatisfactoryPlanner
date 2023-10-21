@@ -3,8 +3,8 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from SatisfactoryPlanner.Factory.Factory import Miner, Factory
-from SatisfactoryPlanner.Resource.Resource import IronOre, IronRod
-from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor
+from SatisfactoryPlanner.Resource.Resource import IronOre, IronRod, BlackPowder, Coal, Sulfur
+from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler
 
 
 class TestFactory(unittest.TestCase):
@@ -22,7 +22,18 @@ class TestFactory(unittest.TestCase):
         self.assertEqual(factory.get_capacity(), Smelter('Iron Ingot').get_production_rates())
 
     def test_assembler_factory(self):
-        raise NotImplementedError("Implement me!")
+        factory = Factory()
+
+        # Add Sulfer and Coal at 30/min to factor
+        factory.add_input(Miner(1, Coal('Impure')))
+        factory.add_input(Miner(1, Sulfur('Impure')))
+
+        # Produce Black Powder using an Assembler to consume all the coal and sulfer
+        factory.add_machine(Assembler('Black Powder'))
+        factory.add_machine(Assembler('Black Powder'))
+
+        # Confirm Iron Rods are being produced
+        self.assertEqual(factory.get_capacity()[BlackPowder], Assembler('Black Powder').get_production_rates()[BlackPowder] * 2)
 
     def test_blender_factory(self):
         raise NotImplementedError("Implement me!")
@@ -44,7 +55,7 @@ class TestFactory(unittest.TestCase):
         # Confirm Iron Rods are being produced
         self.assertEqual(factory.get_capacity()[IronRod], Constructor('Iron Rod').get_production_rates()[IronRod]*2)
 
-    def test_constructor_factory_overconsumption(self):
+    def test_factory_overconsumption(self):
         miner = Miner(1, IronOre('Impure'))
         factory = Factory()
 
