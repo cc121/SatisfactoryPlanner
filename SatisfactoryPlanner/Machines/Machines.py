@@ -857,6 +857,479 @@ class Constructor(Machine):
     }
 
 
+class Foundry(Machine):
+    recipes = {
+        'Aluminum Ingot': {
+            'consumption': {
+                AluminumScrap: 90,
+                Silica: 75
+            },
+            'production': {
+                AluminumIngot: 60
+            }
+        },
+        'Coke Steel Ingot': {
+            'consumption': {
+                IronOre: 75,
+                PetroleumCoke: 75
+            },
+            'production': {
+                SteelIngot: 100
+            }
+        },
+        'Compacted Steel Ingot': {
+            'consumption': {
+                IronOre: 22.5,
+                CompactedCoal: 11.25
+            },
+            'production': {
+                SteelIngot: 37.5
+            }
+        },
+        'Copper Alloy Ingot': {
+            'consumption': {
+                CopperOre: 50,
+                IronOre: 25
+            },
+            'production': {
+                CopperIngot: 100
+            }
+        },
+        'Iron Alloy Ingot': {
+            'consumption': {
+                IronOre: 20,
+                CopperOre: 20
+            },
+            'production': {
+                IronIngot: 50
+            }
+        },
+        'Solid Steel Ingot': {
+            'consumption': {
+                IronIngot: 40,
+                Coal: 40
+            },
+            'production': {
+                SteelIngot: 60
+            }
+        },
+        'Steel Ingot': {
+            'consumption': {
+                IronOre: 45,
+                Coal: 45
+            },
+            'production': {
+                SteelIngot: 45
+            }
+        },
+    }
+
+
+class Manufacturer(Machine):
+    recipes = {
+        'Adaptive Control Unit': {
+            'consumption': {
+                AutomatedWiring: 7.5,
+                CircuitBoard: 5,
+                HeavyModularFrame: 1,
+                Computer: 1
+            },
+            'production': {
+                AdaptiveControlUnit: 1
+            }
+        },
+        'Automated Miner': {
+            'consumption': {
+                Motor: 1,
+                SteelPipe: 4,
+                IronRod: 4,
+                IronPlate: 2
+            },
+            'production': {
+                PortableMiner: 1
+            }
+        },
+        'Automated Speed Wiring': {
+            'consumption': {
+                Stator: 3.75,
+                Wire: 75,
+                HighSpeedConnector: 1.875
+            },
+            'production': {
+                AutomatedWiring: 7.5
+            }
+        },
+        'Beacon': {
+            'consumption': {
+                IronPlate: 22.5,
+                IronRod: 7.5,
+                Wire: 112.5,
+                Cable: 15
+            },
+            'production': {
+                Beacon: 7.5
+            }
+        },
+        'Caterium Computer': {
+            'consumption': {
+                CircuitBoard: 26.25,
+                Quickwire: 105,
+                Rubber: 45
+            },
+            'production': {
+                Computer: 3.8
+            }
+        },
+        'Classic Battery': {
+            'consumption': {
+                Sulfur: 45,
+                AlcladAluminumSheet: 52.5,
+                Plastic: 60,
+                Wire: 90
+            },
+            'production': {
+                Battery: 30
+            }
+        },
+        'Computer': {
+            'consumption': {
+                CircuitBoard: 25,
+                Cable: 22.5,
+                Plastic: 45,
+                Screw: 130
+            },
+            'production': {
+                Computer: 2.5
+            }
+        },
+        'Crystal Beacon': {
+            'consumption': {
+                SteelBeam: 2,
+                SteelPipe: 8,
+                CrystalOscillator: 0.5
+            },
+            'production': {
+                Beacon: 10
+            }
+        },
+        'Crystal Oscillator': {
+            'consumption': {
+                QuartzCrystal: 18,
+                Cable: 14,
+                ReinforcedIronPlate: 2.5
+            },
+            'production': {
+                CrystalOscillator: 1
+            }
+        },
+        'Explosive Rebar': {
+            'consumption': {
+                IronRebar: 10,
+                SmokelessPowder: 10,
+                SteelPipe: 10
+            },
+            'production': {
+                ExplosiveRebar: 5
+            }
+        },
+        'Flexible Framework': {
+            'consumption': {
+                ModularFrame: 3.75,
+                SteelBeam: 22.5,
+                Rubber: 30
+            },
+            'production': {
+                VersatileFramework: 7.5
+            }
+        },
+        'Gas Filter': {
+            'consumption': {
+                Coal: 37.5,
+                Rubber: 15,
+                Fabric: 15
+            },
+            'production': {
+                GasFilter: 7.5
+            }
+        },
+        'Heavy Encased Frame': {
+            'consumption': {
+                ModularFrame: 7.5,
+                EncasedIndustrialBeam: 9.375,
+                SteelPipe: 33.75,
+                Concrete: 20.625
+            },
+            'production': {
+                HeavyModularFrame: 2.8
+            }
+        },
+        'Heavy Flexible Frame': {
+            'consumption': {
+                ModularFrame: 18.75,
+                EncasedIndustrialBeam: 11.25,
+                Rubber: 75,
+                Screw: 390
+            },
+            'production': {
+                HeavyModularFrame: 3.8
+            }
+        },
+        'Heavy Modular Frame': {
+            'consumption': {
+                ModularFrame: 10,
+                SteelPipe: 30,
+                EncasedIndustrialBeam: 10,
+                Screw: 200
+            },
+            'production': {
+                HeavyModularFrame: 2
+            }
+        },
+        'High-Speed Connector': {
+            'consumption': {
+                Quickwire: 210,
+                Cable: 37.5,
+                CircuitBoard: 3.75
+            },
+            'production': {
+                HighSpeedConnector: 3.8
+            }
+        },
+        'Infused Uranium Cell': {
+            'consumption': {
+                Uranium: 25,
+                Silica: 15,
+                Sulfur: 25,
+                Quickwire: 75
+            },
+            'production': {
+                EncasedUraniumCell: 20
+            }
+        },
+        'Insulated Crystal Oscillator': {
+            'consumption': {
+                QuartzCrystal: 18.75,
+                Rubber: 13.125,
+                AILimiter: 1.875
+            },
+            'production': {
+                CrystalOscillator: 1.9
+            }
+        },
+        'Iodine Infused Filter': {
+            'consumption': {
+                GasFilter: 3.75,
+                Quickwire: 30,
+                AluminumCasing: 3.75
+            },
+            'production': {
+                IodineInfusedFilter: 3.8
+            }
+        },
+        'Magnetic Field Generator': {
+            'consumption': {
+                VersatileFramework: 2.5,
+                ElectromagneticControlRod: 1,
+                Battery: 5
+            },
+            'production': {
+                MagneticFieldGenerator: 1
+            }
+        },
+        'Modular Engine': {
+            'consumption': {
+                Motor: 2,
+                Rubber: 15,
+                SmartPlating: 2
+            },
+            'production': {
+                ModularEngine: 1
+            }
+        },
+        'Nuke Nobelisk': {
+            'consumption': {
+                Nobelisk: 2.5,
+                EncasedUraniumCell: 10,
+                SmokelessPowder: 5,
+                AILimiter: 3
+            },
+            'production': {
+                NukeNobelisk: 0.5
+            }
+        },
+        'Plastic Smart Plating': {
+            'consumption': {
+                ReinforcedIronPlate: 2.5,
+                Rotor: 2.5,
+                Plastic: 7.5
+            },
+            'production': {
+                SmartPlating: 5
+            }
+        },
+        'Plutonium Fuel Rod': {
+            'consumption': {
+                EncasedPlutoniumCell: 7.5,
+                SteelBeam: 4.5,
+                ElectromagneticControlRod: 1.5,
+                HeatSink: 2.5
+            },
+            'production': {
+                PlutoniumFuelRod: 0.3
+            }
+        },
+        'Radio Connection Unit': {
+            'consumption': {
+                HeatSink: 15,
+                HighSpeedConnector: 7.5,
+                QuartzCrystal: 45
+            },
+            'production': {
+                RadioControlUnit: 3.8
+            }
+        },
+        'Radio Control System': {
+            'consumption': {
+                CrystalOscillator: 1.5,
+                CircuitBoard: 15,
+                AluminumCasing: 90,
+                Rubber: 45
+            },
+            'production': {
+                RadioControlUnit: 2.5
+            }
+        },
+        'Radio Control Unit': {
+            'consumption': {
+                AluminumCasing: 40,
+                CrystalOscillator: 1.25,
+                Computer: 1.25
+            },
+            'production': {
+                RadioControlUnit: 2.5
+            }
+        },
+        'Rigour Motor': {
+            'consumption': {
+                Rotor: 3.75,
+                Stator: 3.75,
+                CrystalOscillator: 1.25
+            },
+            'production': {
+                Motor: 7.5
+            }
+        },
+        'Silicon High-Speeed Connector': {
+            'consumption': {
+                Quickwire: 90,
+                Silica: 37.5,
+                CircuitBoard: 3
+            },
+            'production': {
+                HighSpeedConnector: 3
+            }
+        },
+        'Super-State Computer': {
+            'consumption': {
+                Computer: 3.6,
+                ElectromagneticControlRod: 2.4,
+                Battery: 24,
+                Wire: 54
+            },
+            'production': {
+                Supercomputer: 2.4
+            }
+        },
+        'Supercomputer': {
+            'consumption': {
+                Computer: 3.75,
+                AILimiter: 3.75,
+                HighSpeedConnector: 5.625,
+                Plastic: 52.5
+            },
+            'production': {
+                Supercomputer: 1.9
+            }
+        },
+        'Thermal Propulsion Rocket': {
+            'consumption': {
+                ModularEngine: 2.5,
+                TurboMotor: 1,
+                CoolingSystem: 3,
+                FusedModularFrame: 1
+            },
+            'production': {
+                ThermalPropulsionRocket: 1
+            }
+        },
+        'Turbo Electric Motor': {
+            'consumption': {
+                Motor: 6.5625,
+                RadioControlUnit: 8.4375,
+                ElectromagneticControlRod: 4.6875,
+                Rotor: 6.5625
+            },
+            'production': {
+                TurboMotor: 2.8
+            }
+        },
+        'Turbo Motor': {
+            'consumption': {
+                CoolingSystem: 7.5,
+                RadioControlUnit: 3.75,
+                Motor: 7.5,
+                Rubber: 45
+            },
+            'production': {
+                TurboMotor: 1.9
+            }
+        },
+        'Turbo Pressure Motor': {
+            'consumption': {
+                Motor: 7.5,
+                PressureConversionCube: 1.875,
+                PackagedNitrogenGas: 45,
+                Stator: 15
+            },
+            'production': {
+                TurboMotor: 3.8
+            }
+        },
+        'Turbo Rifle Ammo': {
+            'consumption': {
+                RifleAmmo: 125,
+                AluminumCasing: 15,
+                PackagedTurboFuel: 15
+            },
+            'production': {
+                TurboRifleAmmo: 250
+            }
+        },
+        'Uranium Fuel Rod': {
+            'consumption': {
+                EncasedUraniumCell: 20,
+                EncasedIndustrialBeam: 1.2,
+                ElectromagneticControlRod: 2
+            },
+            'production': {
+                UraniumFuelRod: 0.4
+            }
+        },
+
+        'Uranium Fuel Unit': {
+            'consumption': {
+                EncasedUraniumCell: 20,
+                ElectromagneticControlRod: 2,
+                CrystalOscillator: 0.6,
+                Beacon: 1.2
+            },
+            'production': {
+                UraniumFuelRod: 0.6
+            }
+        },
+    }
+
+
 class Smelter(Machine):
     recipes = {
         'Caterium Ingot': {

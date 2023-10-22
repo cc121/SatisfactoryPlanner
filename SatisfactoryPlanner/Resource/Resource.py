@@ -47,6 +47,14 @@ class AutomatedWiring(Resource):
     pass
 
 
+class Battery(Resource):
+    pass
+
+
+class Beacon(Resource):
+    pass
+
+
 class Biomass(Resource):
     pass
 
@@ -131,6 +139,14 @@ class EncasedPlutoniumCell(Resource):
     pass
 
 
+class EncasedUraniumCell(Resource):
+    pass
+
+
+class ExplosiveRebar(Resource):
+    pass
+
+
 class Fabric(Resource):
     pass
 
@@ -140,6 +156,10 @@ class FlowerPetals(Resource):
 
 
 class FusedModularFrame(Resource):
+    pass
+
+
+class GasFilter(Resource):
     pass
 
 
@@ -155,6 +175,10 @@ class HeatSink(Resource):
     pass
 
 
+class HeavyModularFrame(Resource):
+    pass
+
+
 class HighSpeedConnector(Resource):
     pass
 
@@ -164,6 +188,10 @@ class HogRemains(Resource):
 
 
 class HomingRifleAmmo(Resource):
+    pass
+
+
+class IodineInfusedFilter(Resource):
     pass
 
 
@@ -187,6 +215,14 @@ class Leaves(Resource):
     pass
 
 
+class MagneticFieldGenerator(Resource):
+    pass
+
+
+class ModularEngine(Resource):
+    pass
+
+
 class ModularFrame(Resource):
     pass
 
@@ -200,6 +236,18 @@ class Mycelia(Resource):
 
 
 class Nobelisk(Resource):
+    pass
+
+
+class NukeNobelisk(Resource):
+    pass
+
+
+class PackagedNitrogenGas(Resource):
+    pass
+
+
+class PackagedTurboFuel(Resource):
     pass
 
 
@@ -220,6 +268,10 @@ class PlutoniumFuelRod(Resource):
 
 
 class PlutoniumPellet(Resource):
+    pass
+
+
+class PortableMiner(Resource):
     pass
 
 
@@ -316,6 +368,22 @@ class StunRebar(Resource):
 
 
 class Supercomputer(Resource):
+    pass
+
+
+class ThermalPropulsionRocket(Resource):
+    pass
+
+
+class TurboMotor(Resource):
+    pass
+
+
+class TurboRifleAmmo(Resource):
+    pass
+
+
+class UraniumFuelRod(Resource):
     pass
 
 
