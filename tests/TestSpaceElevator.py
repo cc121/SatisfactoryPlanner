@@ -2,9 +2,9 @@ import unittest
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from SatisfactoryPlanner.Factory.Factory import Miner, Factory
+from SatisfactoryPlanner.Factory.Factory import Miner, Factory, OilExtractor
 from SatisfactoryPlanner.Resource.Resource import *
-from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler, Foundry, Manufacturer
+from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler, Foundry, Manufacturer, Refinery, FuelGenerator
 
 
 class TestSpaceElevator(unittest.TestCase):
@@ -202,14 +202,88 @@ class TestSpaceElevator(unittest.TestCase):
             AutomatedWiring: 2.5
         })
 
-        return factory, sff
+        return factory, sff, sf
 
-    def build_space_elevator_3_factory(self, se1_factory, se2_factory, foundry):
+    def build_space_elevator_3_factory(self, se1_factory, se2_factory, foundry, stator_factory):
         factory = Factory()
 
-        # Use any excess production from Space Elevator 1 and 2 Factories
+        # Use any excess production from Space Elevator 1
         factory.add_input(se1_factory)
+
+        # Upgrade the Stator factory Used by Space Elevator Factory 2 to produce more stators
+        stator_factory.add_input(Miner(1, CopperOre('Normal')))
+
+        stator_factory.add_machine(Smelter('Copper Ingot'))
+
+        stator_factory.add_machine(Constructor('Wire'))
+
+        stator_factory.add_machine(Assembler('Stator'))
+
+        self.assertEqual(stator_factory.get_capacity(), {
+            CopperIngot: 15,
+            Wire: 10,
+            Stator: 7.5,
+            Cable: 10
+        })
+
+        # Upgrade Space Elevator Factory 2 to produce more Automated Wiring
+        se2_factory.add_input(Miner(1, CopperOre('Normal')))
+        se2_factory.add_input(Miner(1, CopperOre('Normal')))
+
+        se2_factory.add_machine(Smelter('Copper Ingot'))
+        se2_factory.add_machine(Smelter('Copper Ingot'))
+        se2_factory.add_machine(Smelter('Copper Ingot'))
+
+        se2_factory.add_machine(Constructor('Wire'))
+        se2_factory.add_machine(Constructor('Wire'))
+        se2_factory.add_machine(Constructor('Wire'))
+        se2_factory.add_machine(Constructor('Wire'))
+        se2_factory.add_machine(Constructor('Wire'))
+        se2_factory.add_machine(Constructor('Wire'))
+
+        se2_factory.add_machine(Constructor('Cable'))
+        se2_factory.add_machine(Constructor('Cable'))
+        se2_factory.add_machine(Constructor('Cable'))
+
+        se2_factory.add_machine(Assembler('Automated Wiring'))
+        se2_factory.add_machine(Assembler('Automated Wiring'))
+
+        self.assertEqual(se2_factory.get_capacity(), {
+            VersatileFramework: 5,
+            AutomatedWiring: 7.5,
+            Cable: 0,
+            CopperIngot: 15,
+            Wire: 10
+        })
         factory.add_input(se2_factory)
+
+        # Upgrade the Foundry
+        foundry.add_input(Miner(1, IronOre('Normal')))
+        foundry.add_input(Miner(1, IronOre('Normal')))
+        foundry.add_input(Miner(1, IronOre('Normal')))
+        foundry.add_input(Miner(1, IronOre('Normal')))
+        foundry.add_input(Miner(1, IronOre('Normal')))
+        foundry.add_input(Miner(1, Coal('Normal')))
+        foundry.add_input(Miner(1, Coal('Normal')))
+        foundry.add_input(Miner(1, Coal('Normal')))
+        foundry.add_input(Miner(1, Coal('Normal')))
+        foundry.add_input(Miner(1, Coal('Normal')))
+
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+        foundry.add_machine(Foundry('Steel Ingot'))
+
+        foundry.add_machine(Constructor('Steel Pipe'))
+        foundry.add_machine(Constructor('Steel Pipe'))
+
+        foundry.add_machine(Constructor('Steel Beam'))
+        foundry.add_machine(Constructor('Steel Beam'))
+        foundry.add_machine(Constructor('Steel Beam'))
+        foundry.add_machine(Constructor('Steel Beam'))
 
         # Produce Motors (Import from Foundry)
         mf = Factory()
@@ -276,6 +350,189 @@ class TestSpaceElevator(unittest.TestCase):
         })
         factory.add_input(mf)
 
+        # Refinery Factory
+        rf = Factory()
+
+        rf.add_input(OilExtractor(CrudeOil('Normal')))
+        rf.add_input(OilExtractor(CrudeOil('Normal')))
+        rf.add_input(OilExtractor(CrudeOil('Normal')))
+
+        rf.add_machine(Refinery('Rubber'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+        rf.add_machine(Refinery('Plastic'))
+
+        # Sink the heavy oil residue into fuel and convert to power
+        rf.add_machine(Refinery('Residual Fuel', clock_speed_modifier=110/60))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel'))
+        rf.add_machine(FuelGenerator('Fuel', allow_undersupply=True))
+
+        self.assertEqual(rf.get_capacity(), {
+            Rubber: 20,
+            Plastic: 180,
+            HeavyOilResidue: 0,
+            Fuel: 0
+        })
+        factory.add_input(rf)
+
+        # Computer Factory (Import Plastic from Refinery)
+        cf = Factory()
+
+        cf.add_input(rf)
+
+        cf.add_input(Miner(1, CopperOre('Normal')))
+        cf.add_input(Miner(1, CopperOre('Normal')))
+        cf.add_input(Miner(1, CopperOre('Normal')))
+        cf.add_input(Miner(1, IronOre('Normal')))
+
+        cf.add_machine(Smelter('Copper Ingot'))
+        cf.add_machine(Smelter('Copper Ingot'))
+        cf.add_machine(Smelter('Copper Ingot'))
+        cf.add_machine(Smelter('Copper Ingot'))
+        cf.add_machine(Smelter('Copper Ingot'))
+        cf.add_machine(Smelter('Iron Ingot'))
+        cf.add_machine(Smelter('Iron Ingot'))
+
+        cf.add_machine(Constructor('Copper Sheet'))
+        cf.add_machine(Constructor('Copper Sheet'))
+        cf.add_machine(Constructor('Copper Sheet'))
+        cf.add_machine(Constructor('Copper Sheet'))
+        cf.add_machine(Constructor('Copper Sheet'))
+        cf.add_machine(Constructor('Copper Sheet'))
+
+        cf.add_machine(Assembler('Circuit Board'))
+        cf.add_machine(Assembler('Circuit Board'))
+        cf.add_machine(Assembler('Circuit Board'))
+        cf.add_machine(Assembler('Circuit Board'))
+
+        cf.add_machine(Constructor('Wire'))
+        cf.add_machine(Constructor('Wire'))
+
+        cf.add_machine(Constructor('Cable'))
+
+        cf.add_machine(Constructor('Iron Rod'))
+        cf.add_machine(Constructor('Iron Rod'))
+        cf.add_machine(Constructor('Iron Rod'))
+
+        cf.add_machine(Constructor('Screw'))
+        cf.add_machine(Constructor('Screw'))
+        cf.add_machine(Constructor('Screw'))
+        cf.add_machine(Constructor('Screw'))
+
+        cf.add_machine(Manufacturer('Computer'))
+
+        self.assertEqual(cf.get_capacity(), {
+            CircuitBoard: 5,
+            CopperIngot: 0,
+            CopperSheet: 0,
+            IronIngot: 15,
+            IronRod: 5,
+            Wire: 0,
+            Screw: 30,
+            Cable: 7.5,
+            Computer: 2.5
+        })
+        factory.add_input(cf)
+
+        # Heavy Modular Frame factory
+        hmff = Factory()
+
+        hmff.add_input(foundry)
+
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, IronOre('Normal')))
+        hmff.add_input(Miner(1, Limestone('Normal')))
+        hmff.add_input(Miner(1, Limestone('Normal')))
+        hmff.add_input(Miner(1, Limestone('Normal')))
+
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+        hmff.add_machine(Smelter('Iron Ingot'))
+
+        hmff.add_machine(Constructor('Iron Plate'))
+        hmff.add_machine(Constructor('Iron Plate'))
+        hmff.add_machine(Constructor('Iron Plate'))
+        hmff.add_machine(Constructor('Iron Plate'))
+        hmff.add_machine(Constructor('Iron Plate'))
+
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+        hmff.add_machine(Constructor('Iron Rod'))
+
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+        hmff.add_machine(Constructor('Screw'))
+
+        hmff.add_machine(Assembler('Reinforced Iron Plate'))
+        hmff.add_machine(Assembler('Reinforced Iron Plate'))
+        hmff.add_machine(Assembler('Reinforced Iron Plate'))
+
+        hmff.add_machine(Assembler('Modular Frame'))
+        hmff.add_machine(Assembler('Modular Frame'))
+        hmff.add_machine(Assembler('Modular Frame'))
+        hmff.add_machine(Assembler('Modular Frame'))
+        hmff.add_machine(Assembler('Modular Frame'))
+
+        hmff.add_machine(Constructor('Concrete'))
+        hmff.add_machine(Constructor('Concrete'))
+        hmff.add_machine(Constructor('Concrete'))
+        hmff.add_machine(Constructor('Concrete'))
+
+        hmff.add_machine(Assembler('Encased Industrial Beam'))
+        hmff.add_machine(Assembler('Encased Industrial Beam'))
+
+        hmff.add_machine(Manufacturer('Heavy Modular Frame'))
+
+        self.assertEqual(hmff.get_capacity(), {
+            IronIngot: 15,
+            IronPlate: 10,
+            IronRod: 5,
+            ReinforcedIronPlate: 0,
+            ModularFrame: 0,
+            Screw: 20,
+            EncasedIndustrialBeam: 2,
+            Concrete: 0,
+            HeavyModularFrame: 2
+        })
+        factory.add_input(hmff)
 
         # Produce the Space Elevator resources
         factory.add_machine(Manufacturer('Modular Engine'))
@@ -290,8 +547,8 @@ class TestSpaceElevator(unittest.TestCase):
 
     def test_tier_3(self):
         se1_factory = self.build_space_elevator_1_factory()
-        se2_factory, foundry = self.build_space_elevator_2_factory(se1_factory)
-        self.build_space_elevator_3_factory(se1_factory, se2_factory, foundry)
+        se2_factory, foundry, stator_factory = self.build_space_elevator_2_factory(se1_factory)
+        self.build_space_elevator_3_factory(se1_factory, se2_factory, foundry, stator_factory)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,7 +1,12 @@
 class Resource:
+    SINKABLE = True
     @classmethod
     def get_name(cls):
         return cls.__name__
+
+    @classmethod
+    def get_sinkable(cls):
+        return cls.SINKABLE
 
     def get_class(self):
         return self.__class__
@@ -25,6 +30,10 @@ class AlienDNACapsule(Resource):
 
 class AlienProtein(Resource):
     pass
+
+
+class AluminaSolution(Resource):
+    SINKABLE = False
 
 
 class AluminumCasing(Resource):
@@ -155,6 +164,10 @@ class FlowerPetals(Resource):
     pass
 
 
+class Fuel(Resource):
+    SINKABLE = False
+
+
 class FusedModularFrame(Resource):
     pass
 
@@ -177,6 +190,10 @@ class HeatSink(Resource):
 
 class HeavyModularFrame(Resource):
     pass
+
+
+class HeavyOilResidue(Resource):
+    SINKABLE = False
 
 
 class HighSpeedConnector(Resource):
@@ -215,6 +232,10 @@ class Leaves(Resource):
     pass
 
 
+class LiquidBiofuel(Resource):
+    pass
+
+
 class MagneticFieldGenerator(Resource):
     pass
 
@@ -243,11 +264,19 @@ class NukeNobelisk(Resource):
     pass
 
 
+class PackagedFuel(Resource):
+    pass
+
+
 class PackagedNitrogenGas(Resource):
     pass
 
 
 class PackagedTurboFuel(Resource):
+    pass
+
+
+class PackagedWater(Resource):
     pass
 
 
@@ -268,6 +297,10 @@ class PlutoniumFuelRod(Resource):
 
 
 class PlutoniumPellet(Resource):
+    pass
+
+
+class PolymerResin(Resource):
     pass
 
 
@@ -367,12 +400,20 @@ class StunRebar(Resource):
     pass
 
 
+class SulfuricAcid(Resource):
+    SINKABLE = False
+
+
 class Supercomputer(Resource):
     pass
 
 
 class ThermalPropulsionRocket(Resource):
     pass
+
+
+class Turbofuel(Resource):
+    SINKABLE = False
 
 
 class TurboMotor(Resource):
@@ -389,6 +430,10 @@ class UraniumFuelRod(Resource):
 
 class VersatileFramework(Resource):
     pass
+
+
+class Water(Resource):
+    SINKABLE = False
 
 
 class Wire(Resource):
@@ -454,3 +499,11 @@ class Sulfur(Ore):
 
 class Uranium(Ore):
     pass
+
+
+class Oil(Ore):
+    pass
+
+
+class CrudeOil(Oil):
+    SINKABLE = False

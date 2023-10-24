@@ -2,15 +2,23 @@ from ..Resource.Resource import *
 
 
 class Machine:
-    def __init__(self, recipe_name):
-        self.consumption_rates = self.recipes[recipe_name]["consumption"]
-        self.production_rates = self.recipes[recipe_name]["production"]
+    def __init__(self, recipe_name, clock_speed_modifier=1):
+        if clock_speed_modifier > 2.5 or clock_speed_modifier < .25:
+            raise ValueError('Invalid clock speed percentage!')
+
+        self.consumption_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in self.recipes[recipe_name]["consumption"].items()}
+        self.production_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in self.recipes[recipe_name]["production"].items()}
+
+        self.allow_undersupply = False
 
     def get_consumption_rate(self):
         return self.consumption_rates
 
     def get_production_rates(self):
         return self.production_rates
+
+    def get_allow_undersupply(self):
+        return self.allow_undersupply
 
 
 class Assembler(Machine):
@@ -925,6 +933,39 @@ class Foundry(Machine):
     }
 
 
+class FuelGenerator(Machine):
+    recipes = {
+        'Fuel': {
+            'consumption': {
+                Fuel: 12
+            },
+            'production': {
+
+            }
+        },
+        'Liquid Biofuel': {
+            'consumption': {
+                LiquidBiofuel: 12
+            },
+            'production': {
+
+            }
+        },
+        'Turbofuel': {
+            'consumption': {
+                Turbofuel: 4.5
+            },
+            'production': {
+
+            }
+        },
+    }
+
+    def __init__(self, recipe_name, clock_speed_modifier=1, allow_undersupply=False):
+        super().__init__(recipe_name, clock_speed_modifier)
+        self.allow_undersupply = allow_undersupply
+
+
 class Manufacturer(Machine):
     recipes = {
         'Adaptive Control Unit': {
@@ -1325,6 +1366,273 @@ class Manufacturer(Machine):
             },
             'production': {
                 UraniumFuelRod: 0.6
+            }
+        },
+    }
+
+
+class Refinery(Machine):
+    recipes = {
+        'Alumina Solution': {
+            'consumption': {
+                Bauxite: 120,
+                Water: 180
+            },
+            'production': {
+                AluminaSolution: 120,
+                Silica: 50
+            }
+        },
+        'Aluminum Scrap': {
+            'consumption': {
+                AluminaSolution: 240,
+                Coal: 120
+            },
+            'production': {
+                AluminumScrap: 360,
+                Water: 120
+            }
+        },
+        'Coated Cable': {
+            'consumption': {
+                Wire: 37.5,
+                HeavyOilResidue: 15
+            },
+            'production': {
+                Cable: 67.5
+            }
+        },
+        'Diluted Packaged Fuel': {
+            'consumption': {
+                HeavyOilResidue: 30,
+                PackagedWater: 60
+            },
+            'production': {
+                PackagedFuel: 60
+            }
+        },
+        'Electrode-Aluminum Scrap': {
+            'consumption': {
+                AluminaSolution: 180,
+                PetroleumCoke: 60
+            },
+            'production': {
+                AluminumScrap: 300,
+                Water: 105
+            }
+        },
+        'Fuel': {
+            'consumption': {
+                CrudeOil: 60
+            },
+            'production': {
+                Fuel: 40,
+                PolymerResin: 30
+            }
+        },
+        'Heavy Oil Residue': {
+            'consumption': {
+                CrudeOil: 30
+            },
+            'production': {
+                HeavyOilResidue: 40,
+                PolymerResin: 20
+            }
+        },
+        'Liquid Biofuel': {
+            'consumption': {
+                SolidBiofuel: 990,
+                Water: 45
+            },
+            'production': {
+                LiquidBiofuel: 60
+            }
+        },
+        'Petroleum Coke': {
+            'consumption': {
+                HeavyOilResidue: 40
+            },
+            'production': {
+                PetroleumCoke: 120
+            }
+        },
+        'Plastic': {
+            'consumption': {
+                CrudeOil: 30
+            },
+            'production': {
+                Plastic: 20,
+                HeavyOilResidue: 10
+            }
+        },
+        'Polyester Fabric': {
+            'consumption': {
+                PolymerResin: 30,
+                Water: 30
+            },
+            'production': {
+                Fabric: 30
+            }
+        },
+        'Polymer Resin': {
+            'consumption': {
+                CrudeOil: 60
+            },
+            'production': {
+                PolymerResin: 130,
+                HeavyOilResidue: 20
+            }
+        },
+        'Pure Caterium Ingot': {
+            'consumption': {
+                CateriumOre: 24,
+                Water: 24
+            },
+            'production': {
+                CateriumIngot: 12
+            }
+        },
+        'Pure Copper Ingot': {
+            'consumption': {
+                CopperOre: 15,
+                Water: 10
+            },
+            'production': {
+                CopperIngot: 37.5
+            }
+        },
+        'Pure Iron Ingot': {
+            'consumption': {
+                IronOre: 35,
+                Water: 20
+            },
+            'production': {
+                IronIngot: 65
+            }
+        },
+        'Pure Quartz Crystal': {
+            'consumption': {
+                RawQuartz: 67.5,
+                Water: 37.5
+            },
+            'production': {
+                QuartzCrystal: 52.5
+            }
+        },
+        'Recycled Plastic': {
+            'consumption': {
+                Rubber: 30,
+                Fuel: 30
+            },
+            'production': {
+                Plastic: 60
+            }
+        },
+        'Recycled Rubber': {
+            'consumption': {
+                Plastic: 30,
+                Fuel: 30
+            },
+            'production': {
+                Rubber: 60
+            }
+        },
+        'Residual Fuel': {
+            'consumption': {
+                HeavyOilResidue: 60
+            },
+            'production': {
+                Fuel: 40
+            }
+        },
+        'Residual Plastic': {
+            'consumption': {
+                PolymerResin: 60,
+                Water: 20
+            },
+            'production': {
+                Plastic: 20
+            }
+        },
+        'Residual Rubber': {
+            'consumption': {
+                PolymerResin: 40,
+                Water: 40
+            },
+            'production': {
+                Rubber: 20
+            }
+        },
+        'Rubber': {
+            'consumption': {
+                CrudeOil: 30
+            },
+            'production': {
+                Rubber: 20,
+                HeavyOilResidue: 20
+            }
+        },
+        'Sloppy Alumina': {
+            'consumption': {
+                Bauxite: 200,
+                Water: 200
+            },
+            'production': {
+                AluminaSolution: 240
+            }
+        },
+        'Smokeless Powder': {
+            'consumption': {
+                BlackPowder: 20,
+                HeavyOilResidue: 10
+            },
+            'production': {
+                SmokelessPowder: 20
+            }
+        },
+        'Steamed Copper Sheet': {
+            'consumption': {
+                CopperIngot: 22.5,
+                Water: 22.5
+            },
+            'production': {
+                CopperSheet: 22.5
+            }
+        },
+        'Sulfuric Acid': {
+            'consumption': {
+                Sulfur: 50,
+                Water: 50
+            },
+            'production': {
+                SulfuricAcid: 50
+            }
+        },
+        'Turbo Heavy Fuel': {
+            'consumption': {
+                HeavyOilResidue: 37.5,
+                CompactedCoal: 30
+            },
+            'production': {
+                Turbofuel: 30
+            }
+        },
+        'TurboFuel': {
+            'consumption': {
+                Fuel: 22.5,
+                CompactedCoal: 15
+            },
+            'production': {
+                Turbofuel: 18.8
+            }
+        },
+        'Wet Concrete': {
+            'consumption': {
+                Limestone: 120,
+                Water: 100
+            },
+            'production': {
+                Concrete: 80
             }
         },
     }
