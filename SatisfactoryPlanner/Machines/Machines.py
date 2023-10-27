@@ -1,7 +1,19 @@
+from ..Resource.Oil import CrudeOil
+from ..Resource.Ore import Ore, Bauxite, CateriumOre, Coal, CopperOre, IronOre, Limestone, RawQuartz, Sulfur, Uranium
 from ..Resource.Resource import *
 
 
 class Machine:
+    recipes = {
+        'Example Recipe': {
+            'consumption': {
+                IronOre: 1
+            },
+            'production': {
+                IronIngot: 1
+            }
+        }
+    }
     def __init__(self, recipe_name, clock_speed_modifier=1):
         if clock_speed_modifier > 2.5 or clock_speed_modifier < .25:
             raise ValueError('Invalid clock speed percentage!')
@@ -11,7 +23,7 @@ class Machine:
 
         self.allow_undersupply = False
 
-    def get_consumption_rate(self):
+    def get_consumption_rates(self):
         return self.consumption_rates
 
     def get_production_rates(self):

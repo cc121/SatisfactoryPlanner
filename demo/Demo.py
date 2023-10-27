@@ -1,14 +1,17 @@
 import os
 import sys
+from SatisfactoryPlanner.Resource.Oil import CrudeOil
+from SatisfactoryPlanner.Resource.Ore import Coal, CopperOre, IronOre, Limestone
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from SatisfactoryPlanner.Factory.Factory import Miner, Factory, OilExtractor
-from SatisfactoryPlanner.Resource.Resource import *
 from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler, Foundry, Manufacturer, Refinery, FuelGenerator
+from SatisfactoryPlanner.Session.Session import Session
 
 
 def foundry_factory():
     # Refinery Factory
-    rf = Factory()
+    rf = Factory('Refinery')
 
     rf.add_input(OilExtractor(CrudeOil('Normal')))
     rf.add_input(OilExtractor(CrudeOil('Normal')))
@@ -39,7 +42,7 @@ def foundry_factory():
 
 
 def reinforced_iron_plate_factory():
-    ripf = Factory()
+    ripf = Factory('Reinforced Iron Plate Factory')
 
     ripf.add_input(Miner(1, IronOre('Normal')))
     ripf.add_input(Miner(1, IronOre('Normal')))
@@ -63,7 +66,7 @@ def reinforced_iron_plate_factory():
 
 
 def rotor_factory():
-    rf = Factory()
+    rf = Factory('Rotor Factory')
 
     rf.add_input(Miner(1, IronOre('Normal')))
 
@@ -85,7 +88,7 @@ def rotor_factory():
 
 
 def steel_foundry_factory():
-    sff = Factory()
+    sff = Factory('Steel Foundry')
 
     sff.add_input(Miner(1, IronOre('Normal')))
     sff.add_input(Miner(1, IronOre('Normal')))
@@ -289,7 +292,7 @@ def upgrade_stator_factory(sf):
 
 
 def build_space_elevator_1_factory():
-    factory = Factory()
+    factory = Factory('Space Elevator 1 Factory')
 
     # Reinforced Iron Plate Factory
     ripf = reinforced_iron_plate_factory()
@@ -306,13 +309,13 @@ def build_space_elevator_1_factory():
 
 
 def build_space_elevator_2_factory(se1_factory, ripf):
-    factory = Factory()
+    factory = Factory('Space Elevator 2 Factory')
 
     # Use any excess production from Space Elevator 1 Factory
     factory.add_input(se1_factory)
 
     # Build a Modular Frame Factory (Import from RIPF)
-    mff = Factory()
+    mff = Factory('Modular Frame Factory')
 
     mff.add_input(ripf)
 
@@ -334,7 +337,7 @@ def build_space_elevator_2_factory(se1_factory, ripf):
     factory.add_input(sff)
 
     # Stator and Cable Factory (Import from the Foundry)
-    sf = Factory()
+    sf = Factory('Stator Factory')
 
     sf.add_input(sff)
 
@@ -366,7 +369,7 @@ def build_space_elevator_2_factory(se1_factory, ripf):
 
 
 def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, ripf, mff):
-    factory = Factory()
+    factory = Factory('Space Elevator 3 Factory')
 
     # Use any excess production from Space Elevator 1
     factory.add_input(se1_factory)
@@ -374,7 +377,7 @@ def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, rip
     factory.add_input(se2_factory)
 
     # Produce Motors (Import from Foundry and Stator Factory)
-    mf = Factory()
+    mf = Factory('Motor Factory')
 
     mf.add_input(sff)
     mf.add_input(sf)
@@ -390,7 +393,7 @@ def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, rip
     factory.add_input(rf)
 
     # Computer Factory (Import Plastic from Refinery)
-    cf = Factory()
+    cf = Factory('Computer Factory')
 
     cf.add_input(rf)
 
@@ -437,7 +440,7 @@ def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, rip
     factory.add_input(cf)
 
     # Heavy Modular Frame factory (import from the Foundry)
-    hmff = Factory()
+    hmff = Factory('Heavy Modular Frame Factory')
 
     hmff.add_input(sff)
     hmff.add_input(ripf)
@@ -510,14 +513,20 @@ def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, rip
 
 
 if __name__ == '__main__':
+    session = Session()
+
     # Build Reinforced Iron Plate and Rotor factories and then Complete Space Elevator Tier 1
     se1_factory, ripf, rot_f = build_space_elevator_1_factory()
+    session.add_factories(se1_factory, ripf, rot_f)
+    session.visualize_factory_relationships('Tier 1.html')
 
     # Upgrade your Reinforced Iron Plate Factory
     ripf = upgrade_reinforced_iron_plate_factory(ripf)
 
     # Build Modular Frame, Steel Foundry, and Stator factories and Complete Space Elevator Tier 2
     se2_factory, mff, sff, sf = build_space_elevator_2_factory(se1_factory, ripf)
+    session.add_factories(se2_factory, mff, sff, sf)
+    session.visualize_factory_relationships('Tier 2.html')
 
     # Upgrade the Stator Factory
     sf = upgrade_stator_factory(sf)
@@ -539,4 +548,6 @@ if __name__ == '__main__':
 
     # Build Motor, Refinery, Computer, and Heavy Modular Frame Factories and Complete Space Elevator Tier 3
     se3_factory, mf, rf, cf, hmff = build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, ripf, mff)
+    session.add_factories(se3_factory, mf, rf, cf, hmff)
+    session.visualize_factory_relationships('Tier 3.html')
 

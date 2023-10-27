@@ -3,99 +3,75 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from SatisfactoryPlanner.Factory.Factory import Miner, Factory
-from SatisfactoryPlanner.Resource.Resource import IronOre, IronRod, BlackPowder, Coal, Sulfur
-from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler
+from SatisfactoryPlanner.Resource.Resource import IronRod, IronIngot, Screw
+from SatisfactoryPlanner.Resource.Ore import IronOre
+from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor
 
 
 class TestFactory(unittest.TestCase):
-    def test_single_simple_factory(self):
-        miner = Miner(1, IronOre('Impure'))
-        factory = Factory()
+    def test_basic_functionality(self):
+        factory = Factory('Test Factory')
 
-        # Add 30 Iron/minute capacity to the current factory
+        miner = Miner(1, IronOre('Impure'))
         factory.add_input(miner)
 
-        # Produce Iron Ingots using a Smelter
+        # Confirm correct production (intermediate)
+        self.assertEqual(miner.get_capacity(), {IronOre: 30})
+
         factory.add_machine(Smelter('Iron Ingot'))
 
-        # Confirm Iron Ingots are being produced
+        # Confirm correct production
         self.assertEqual(factory.get_capacity(), Smelter('Iron Ingot').get_production_rates())
 
-    def test_assembler_factory(self):
-        factory = Factory()
+        # Confirm correct consumption
+        self.assertEqual(miner.get_capacity(), {IronOre: 0})
 
-        # Add Sulfer and Coal at 30/min to factor
-        factory.add_input(Miner(1, Coal('Impure')))
-        factory.add_input(Miner(1, Sulfur('Impure')))
+    def test_advanced_functionality(self):
+        factory = Factory('Test Factory')
 
-        # Produce Black Powder using an Assembler to consume all the coal and sulfer
-        factory.add_machine(Assembler('Black Powder'))
-        factory.add_machine(Assembler('Black Powder'))
-
-        # Confirm Iron Rods are being produced
-        self.assertEqual(factory.get_capacity()[BlackPowder], Assembler('Black Powder').get_production_rates()[BlackPowder] * 2)
-
-    def test_blender_factory(self):
-        raise NotImplementedError("Implement me!")
-
-    def test_constructor_factory(self):
+        # Build and test inputs and internal production for screw production
         miner = Miner(1, IronOre('Impure'))
-        factory = Factory()
-
-        # Add 30 Iron/minute capacity to the current factory
         factory.add_input(miner)
 
-        # Produce Iron Ingots using a Smelter
+        # Confirm correct production (intermediate)
         factory.add_machine(Smelter('Iron Ingot'))
+        self.assertEqual(factory.get_capacity(), {IronIngot: 30})
 
-        # Produce Iron Rods up to maximum available
+        # Confirm correct production (intermediate)
         factory.add_machine(Constructor('Iron Rod'))
-        factory.add_machine(Constructor('Iron Rod'))
+        self.assertEqual(factory.get_capacity(), {IronIngot: 15, IronRod: 15})
 
-        # Confirm Iron Rods are being produced
-        self.assertEqual(factory.get_capacity()[IronRod], Constructor('Iron Rod').get_production_rates()[IronRod]*2)
+        factory.add_machine(Constructor('Screw'))
 
-    def test_factory_overconsumption(self):
+        # Confirm correct production
+        self.assertEqual(factory.get_capacity(), {IronIngot: 15, IronRod: 5, Screw: 40})
+
+    def test_input_miner_upgrade(self):
+        factory = Factory('Test Factory')
+
         miner = Miner(1, IronOre('Impure'))
-        factory = Factory()
-
-        # Add 30 Iron/minute capacity to the current factory
         factory.add_input(miner)
 
-        # Produce Iron Ingots using a Smelter
-        factory.add_machine(Smelter('Iron Ingot'))
+        # Confirm correct production (intermediate)
+        self.assertEqual(miner.get_capacity(), {IronOre: 30})
 
-        # Product Iron Rods beyond available Iron Ingots
-        factory.add_machine(Constructor('Iron Rod'))
-        factory.add_machine(Constructor('Iron Rod'))
+        factory.upgrade_miners(2)
 
-        # Confirm that we fail to add the new constructor, exceeding capacity
-        with self.assertRaises(ValueError):
-            factory.add_machine(Constructor('Iron Rod'))
+        # Confirm correct production
+        self.assertEqual(miner.get_capacity(), {IronOre: 60})
 
-    def test_foundry_factory(self):
-        raise NotImplementedError("Implement me!")
+    def test_get_name(self):
+        factory = Factory('Test Factory')
 
-    def test_manufacturer_factory(self):
-        raise NotImplementedError("Implement me!")
+        self.assertEqual(factory.get_name(), 'Test Factory')
 
-    def test_oil_extractor_factory(self):
-        raise NotImplementedError("Implement me!")
+    def test_get_inputs(self):
+        factory = Factory('Test Factory')
 
-    def test_packager_factory(self):
-        raise NotImplementedError("Implement me!")
+        miner = Miner(1, IronOre('Impure'))
+        factory.add_input(miner)
 
-    def test_particle_accelerator_factory(self):
-        raise NotImplementedError("Implement me!")
-
-    def test_refinery_factory(self):
-        raise NotImplementedError("Implement me!")
-
-    def test_smelter_factory(self):
-        raise NotImplementedError("Implement me!")
-
-    def test_water_extractor_factory(self):
-        raise NotImplementedError("Implement me!")
+        self.assertEqual(factory.get_inputs(), [miner])
 
 
 if __name__ == '__main__':
