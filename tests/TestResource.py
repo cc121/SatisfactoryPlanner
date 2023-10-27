@@ -29,6 +29,7 @@ class TestResource(unittest.TestCase):
         """
         resource = Resource()
         self.assertEqual(resource.get_class(), Resource)
+        self.assertEqual(True, False)
 
 if __name__ == '__main__':
     unittest.main()
