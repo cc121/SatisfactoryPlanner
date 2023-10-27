@@ -1,2 +1,2 @@
-typing_extensions=4.7.1
-pyvis=0.3.2
+typing_extensions==4.7.1
+pyvis==0.3.2
