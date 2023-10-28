@@ -515,11 +515,17 @@ def build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, rip
 if __name__ == '__main__':
     session = Session()
 
+    # ---------------------------------------------------------------------------------------------------------------- #
+    # STEP 1
+    # ---------------------------------------------------------------------------------------------------------------- #
     # Build Reinforced Iron Plate and Rotor factories and then Complete Space Elevator Tier 1
     se1_factory, ripf, rot_f = build_space_elevator_1_factory()
     session.add_factories(se1_factory, ripf, rot_f)
     session.visualize_factory_relationships('Tier 1.html')
 
+    # ---------------------------------------------------------------------------------------------------------------- #
+    # STEP 2
+    # ---------------------------------------------------------------------------------------------------------------- #
     # Upgrade your Reinforced Iron Plate Factory
     ripf = upgrade_reinforced_iron_plate_factory(ripf)
 
@@ -546,6 +552,9 @@ if __name__ == '__main__':
     # Upgrade the se2_factory
     se2_factory = upgrade_se2_factory(se2_factory)
 
+    # ---------------------------------------------------------------------------------------------------------------- #
+    # STEP 3
+    # ---------------------------------------------------------------------------------------------------------------- #
     # Build Motor, Refinery, Computer, and Heavy Modular Frame Factories and Complete Space Elevator Tier 3
     se3_factory, mf, rf, cf, hmff = build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, ripf, mff)
     session.add_factories(se3_factory, mf, rf, cf, hmff)
