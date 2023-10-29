@@ -560,6 +560,151 @@ class Assembler(Machine):
     }
 
 
+class Blender(Machine):
+    recipes = {
+        'Battery': {
+            'consumption': {
+                SulfuricAcid: 50,
+                AluminaSolution: 40,
+                AluminumCasing: 20
+            },
+            'production': {
+                Battery: 20,
+                Water: 30
+            }
+        },
+        'Cooling Device': {
+            'consumption': {
+                HeatSink: 9.375,
+                Motor: 1.875,
+                NitrogenGas: 45
+            },
+            'production': {
+                CoolingSystem: 3.8
+            }
+        },
+        'Cooling System': {
+            'consumption': {
+                HeatSink: 12,
+                Rubber: 12,
+                Water: 30,
+                NitrogenGas: 150
+            },
+            'production': {
+                CoolingSystem: 6
+            }
+        },
+        'Diluted Fuel': {
+            'consumption': {
+                HeavyOilResidue: 50,
+                Water: 100
+            },
+            'production': {
+                Fuel: 100
+            }
+        },
+        'Encased Uranium Cell': {
+            'consumption': {
+                Uranium: 50,
+                Concrete: 15,
+                SulfuricAcid: 40
+            },
+            'production': {
+                EncasedUraniumCell: 25,
+                SulfuricAcid: 10
+            }
+        },
+        'Fertile Uranium': {
+            'consumption': {
+                Uranium: 25,
+                UraniumWaste: 25,
+                NitricAcid: 15,
+                SulfuricAcid: 25
+            },
+            'production': {
+                NonFissileUranium: 100,
+                Water: 40
+            }
+        },
+        'Fused Modular Frame': {
+            'consumption': {
+                HeavyModularFrame: 1.5,
+                AluminumCasing: 75,
+                NitrogenGas: 37.5
+            },
+            'production': {
+                FusedModularFrame: 1.5
+            }
+        },
+        'Heat-Fused Frame': {
+            'consumption': {
+                HeavyModularFrame: 3,
+                AluminumIngot: 150,
+                NitricAcid: 24,
+                Fuel: 30
+            },
+            'production': {
+                FusedModularFrame: 3
+            }
+        },
+        'Instant Scrap': {
+            'consumption': {
+                Bauxite: 150,
+                Coal: 100,
+                SulfuricAcid: 50,
+                Water: 60
+            },
+            'production': {
+                AluminumScrap: 300,
+                Water: 50
+            }
+        },
+        'Nitric Acid': {
+            'consumption': {
+                NitrogenGas: 120,
+                Water: 30,
+                IronPlate: 10
+            },
+            'production': {
+                NitricAcid: 30
+            }
+        },
+        'Non-fissile Uranium': {
+            'consumption': {
+                UraniumWaste: 37.5,
+                Silica: 25,
+                NitricAcid: 15,
+                SulfuricAcid: 15
+            },
+            'production': {
+                NonFissileUranium: 50,
+                Water: 15
+            }
+        },
+        'Turbo Blend Fuel': {
+            'consumption': {
+                Fuel: 15,
+                HeavyOilResidue: 30,
+                Sulfur: 22.5,
+                PetroleumCoke: 22.5
+            },
+            'production': {
+                Turbofuel: 45
+            }
+        },
+        'Turbo Rifle Ammo': {
+            'consumption': {
+                RifleAmmo: 125,
+                AluminumCasing: 15,
+                Turbofuel: 15
+            },
+            'production': {
+                TurboRifleAmmo: 250
+            }
+        },
+    }
+
+
 class Constructor(Machine):
     recipes = {
         'Alien DNA Capsule': {

@@ -256,7 +256,19 @@ class Mycelia(Resource):
     pass
 
 
+class NitricAcid(Resource):
+    SINKABLE = False
+
+
+class NitrogenGas(Resource):
+    SINKABLE = False
+
+
 class Nobelisk(Resource):
+    pass
+
+
+class NonFissileUranium(Resource):
     pass
 
 
@@ -426,6 +438,10 @@ class TurboRifleAmmo(Resource):
 
 class UraniumFuelRod(Resource):
     pass
+
+
+class UraniumWaste(Resource):
+    SINKABLE = False
 
 
 class VersatileFramework(Resource):
