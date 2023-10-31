@@ -2,7 +2,7 @@ import unittest
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from SatisfactoryPlanner.Resource.Ore import Ore
+from SatisfactoryPlanner.Resource.Ore import Ore, SAMOre
 
 
 class TestOre(unittest.TestCase):
@@ -46,7 +46,7 @@ class TestOre(unittest.TestCase):
         self.assertEqual(ore.get_purity_modifier(), 4)
 
         with self.assertRaises(KeyError):
-            ore = Ore('Invalid Input')
+            Ore('Invalid Input')
 
 
 if __name__ == '__main__':

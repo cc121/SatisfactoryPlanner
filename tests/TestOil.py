@@ -2,7 +2,7 @@ import unittest
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from SatisfactoryPlanner.Resource.Oil import Oil
+from SatisfactoryPlanner.Resource.Oil import Oil, CrudeOil
 
 
 class TestOil(unittest.TestCase):
@@ -46,7 +46,11 @@ class TestOil(unittest.TestCase):
         self.assertEqual(oil.get_purity_modifier(), 4)
 
         with self.assertRaises(KeyError):
-            oil = Oil('Invalid Input')
+            Oil('Invalid Input')
+
+    def test_unsinkable(self):
+        for unsinkable_resource in [CrudeOil]:
+            self.assertEqual(unsinkable_resource.get_sinkable(), False)
 
 
 if __name__ == '__main__':

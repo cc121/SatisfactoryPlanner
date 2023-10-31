@@ -30,7 +30,11 @@ class AlienDNACapsule(Resource):
 
 
 class AlienProtein(Resource):
-    pass
+    SINKABLE = False
+
+
+class AlienRemains(Resource):
+    SINKABLE = False
 
 
 class AluminaSolution(Resource):
@@ -234,7 +238,7 @@ class Leaves(Resource):
 
 
 class LiquidBiofuel(Resource):
-    pass
+    SINKABLE = False
 
 
 class MagneticFieldGenerator(Resource):
@@ -270,7 +274,7 @@ class Nobelisk(Resource):
 
 
 class NonFissileUranium(Resource):
-    pass
+    SINKABLE = False
 
 
 class NuclearPasta(Resource):
@@ -338,7 +342,11 @@ class PlutoniumFuelRod(Resource):
 
 
 class PlutoniumPellet(Resource):
-    pass
+    SINKABLE = False
+
+
+class PlutoniumWaste(Resource):
+    SINKABLE = False
 
 
 class PolymerResin(Resource):
@@ -363,6 +371,10 @@ class PulseNobelisk(Resource):
 
 class PurplePowerSlug(Resource):
     pass
+
+
+class QuantumComputer(Resource):
+    SINKABLE = False
 
 
 class QuartzCrystal(Resource):
