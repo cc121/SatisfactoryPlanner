@@ -1528,6 +1528,36 @@ class Manufacturer(Machine):
     }
 
 
+class ParticleAccelerator(Machine):
+    recipes = {
+        'Instant Plutonium Cell': {
+            'consumption': {
+                NonFissileUranium: 75,
+                AluminumCasing: 10
+            },
+            'production': {
+                EncasedPlutoniumCell: 10
+            }
+        },
+        'Nuclear Pasta': {
+            'consumption': {
+                CopperPowder: 100,
+                PressureConversionCube: 0.5
+            },
+            'production': {
+                NuclearPasta: 0.5
+            }
+        },
+        'Plutonium Pellet': {
+            'consumption': {
+                NonFissileUranium: 100,
+                UraniumWaste: 25
+            },
+            'production': {
+                PlutoniumPellet: 30
+            }
+        }
+    }
 class Refinery(Machine):
     recipes = {
         'Alumina Solution': {
