@@ -1,6 +1,6 @@
 from ..Resource.Oil import CrudeOil
-from ..Resource.Ore import Ore, Bauxite, CateriumOre, Coal, CopperOre, IronOre, Limestone, RawQuartz, Sulfur, Uranium
-from ..Resource.Resource import *
+from ..Resource.Ore import Bauxite, CateriumOre, Coal, CopperOre, IronOre, Limestone, RawQuartz, Sulfur, Uranium
+from ..Resource import Resource
 
 
 class Machine:
@@ -10,16 +10,19 @@ class Machine:
                 IronOre: 1
             },
             'production': {
-                IronIngot: 1
+                Resource.IronIngot: 1
             }
         }
     }
+
     def __init__(self, recipe_name, clock_speed_modifier=1):
         if clock_speed_modifier > 2.5 or clock_speed_modifier < .25:
             raise ValueError('Invalid clock speed percentage!')
 
-        self.consumption_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in self.recipes[recipe_name]["consumption"].items()}
-        self.production_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in self.recipes[recipe_name]["production"].items()}
+        self.consumption_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in
+                                  self.recipes[recipe_name]["consumption"].items()}
+        self.production_rates = {resource: round(rate * clock_speed_modifier, 4) for resource, rate in
+                                 self.recipes[recipe_name]["production"].items()}
 
         self.allow_undersupply = False
 
@@ -37,56 +40,56 @@ class Assembler(Machine):
     recipes = {
         'Adhered Iron Plate': {
             'consumption': {
-                IronPlate: 11.25,
-                Rubber: 3.75
+                Resource.IronPlate: 11.25,
+                Resource.Rubber: 3.75
             },
             'production': {
-                ReinforcedIronPlate: 3.8
+                Resource.ReinforcedIronPlate: 3.8
             }
         },
         'AI Limiter': {
             'consumption': {
-                CopperSheet: 25,
-                Quickwire: 100
+                Resource.CopperSheet: 25,
+                Resource.Quickwire: 100
             },
             'production': {
-                AILimiter: 5
+                Resource.AILimiter: 5
             }
         },
         'Alclad Aluminum Sheet': {
             'consumption': {
-                AluminumIngot: 30,
-                CopperSheet: 10
+                Resource.AluminumIngot: 30,
+                Resource.CopperSheet: 10
             },
             'production': {
-                AlcladAluminumSheet: 30
+                Resource.AlcladAluminumSheet: 30
             }
         },
         'Alclad Casing': {
             'consumption': {
-                AluminumIngot: 150,
-                CopperIngot: 75
+                Resource.AluminumIngot: 150,
+                Resource.CopperIngot: 75
             },
             'production': {
-                AluminumCasing: 112.5
+                Resource.AluminumCasing: 112.5
             }
         },
         'Assembly Director System': {
             'consumption': {
-                AdaptiveControlUnit: 1.5,
-                Supercomputer: 0.75
+                Resource.AdaptiveControlUnit: 1.5,
+                Resource.Supercomputer: 0.75
             },
             'production': {
-                AssemblyDirectorSystem: 0.8
+                Resource.AssemblyDirectorSystem: 0.8
             }
         },
         'Automated Wiring': {
             'consumption': {
-                Stator: 2.5,
-                Cable: 50
+                Resource.Stator: 2.5,
+                Resource.Cable: 50
             },
             'production': {
-                AutomatedWiring: 2.5
+                Resource.AutomatedWiring: 2.5
             }
         },
         'Black Powder': {
@@ -95,34 +98,34 @@ class Assembler(Machine):
                 Sulfur: 15
             },
             'production': {
-                BlackPowder: 30
+                Resource.BlackPowder: 30
             }
         },
         'Bolted Frame': {
             'consumption': {
-                ReinforcedIronPlate: 7.5,
-                Screw: 140
+                Resource.ReinforcedIronPlate: 7.5,
+                Resource.Screw: 140
             },
             'production': {
-                ModularFrame: 5
+                Resource.ModularFrame: 5
             }
         },
         'Bolted Iron Plate': {
             'consumption': {
-                IronPlate: 90,
-                Screw: 250
+                Resource.IronPlate: 90,
+                Resource.Screw: 250
             },
             'production': {
-                ReinforcedIronPlate: 15
+                Resource.ReinforcedIronPlate: 15
             }
         },
         'Caterium Circuit Board': {
             'consumption': {
-                Plastic: 12.5,
-                Quickwire: 37.5
+                Resource.Plastic: 12.5,
+                Resource.Quickwire: 37.5
             },
             'production': {
-                CircuitBoard: 8.8
+                Resource.CircuitBoard: 8.8
             }
         },
         'Cheap Silica': {
@@ -131,43 +134,43 @@ class Assembler(Machine):
                 Limestone: 18.75
             },
             'production': {
-                Silica: 26.3
+                Resource.Silica: 26.3
             }
         },
         'Circuit Board': {
             'consumption': {
-                CopperSheet: 15,
-                Plastic: 30
+                Resource.CopperSheet: 15,
+                Resource.Plastic: 30
             },
             'production': {
-                CircuitBoard: 7.5
+                Resource.CircuitBoard: 7.5
             }
         },
         'Cluster Nobelisk': {
             'consumption': {
-                Nobelisk: 7.5,
-                SmokelessPowder: 10
+                Resource.Nobelisk: 7.5,
+                Resource.SmokelessPowder: 10
             },
             'production': {
-                ClusterNobelisk: 2.5
+                Resource.ClusterNobelisk: 2.5
             }
         },
         'Coated Iron Canister': {
             'consumption': {
-                IronPlate: 30,
-                CopperSheet: 15
+                Resource.IronPlate: 30,
+                Resource.CopperSheet: 15
             },
             'production': {
-                EmptyCanister: 60
+                Resource.EmptyCanister: 60
             }
         },
         'Coated Iron Plate': {
             'consumption': {
-                IronIngot: 50,
-                Plastic: 10
+                Resource.IronIngot: 50,
+                Resource.Plastic: 10
             },
             'production': {
-                IronPlate: 75
+                Resource.IronPlate: 75
             }
         },
         'Compacted Coal': {
@@ -176,385 +179,385 @@ class Assembler(Machine):
                 Sulfur: 25
             },
             'production': {
-                CompactedCoal: 25
+                Resource.CompactedCoal: 25
             }
         },
         'Copper Rotor': {
             'consumption': {
-                CopperSheet: 22.5,
-                Screw: 195
+                Resource.CopperSheet: 22.5,
+                Resource.Screw: 195
             },
             'production': {
-                Rotor: 11.3
+                Resource.Rotor: 11.3
             }
         },
         'Crystal Computer': {
             'consumption': {
-                CircuitBoard: 7.5,
-                CrystalOscillator: 2.8125
+                Resource.CircuitBoard: 7.5,
+                Resource.CrystalOscillator: 2.8125
             },
             'production': {
-                Computer: 2.8
+                Resource.Computer: 2.8
             }
         },
         'Electric Motor': {
             'consumption': {
-                ElectromagneticControlRod: 3.75,
-                Rotor: 7.5
+                Resource.ElectromagneticControlRod: 3.75,
+                Resource.Rotor: 7.5
             },
             'production': {
-                Motor: 7.5
+                Resource.Motor: 7.5
             }
         },
         'Electrode Circuit Board': {
             'consumption': {
-                Rubber: 30,
-                PetroleumCoke: 45
+                Resource.Rubber: 30,
+                Resource.PetroleumCoke: 45
             },
             'production': {
-                CircuitBoard: 5
+                Resource.CircuitBoard: 5
             }
         },
         'Electromagnetic Connection Rod': {
             'consumption': {
-                Stator: 8,
-                HighSpeedConnector: 4
+                Resource.Stator: 8,
+                Resource.HighSpeedConnector: 4
             },
             'production': {
-                ElectromagneticControlRod: 8
+                Resource.ElectromagneticControlRod: 8
             }
         },
         'Electromagnetic Control Rod': {
             'consumption': {
-                Stator: 6,
-                AILimiter: 4
+                Resource.Stator: 6,
+                Resource.AILimiter: 4
             },
             'production': {
-                ElectromagneticControlRod: 4
+                Resource.ElectromagneticControlRod: 4
             }
         },
         'Encased Industrial Beam': {
             'consumption': {
-                SteelBeam: 24,
-                Concrete: 30
+                Resource.SteelBeam: 24,
+                Resource.Concrete: 30
             },
             'production': {
-                EncasedIndustrialBeam: 6
+                Resource.EncasedIndustrialBeam: 6
             }
         },
         'Encased Industrial Pipe': {
             'consumption': {
-                SteelPipe: 28,
-                Concrete: 20
+                Resource.SteelPipe: 28,
+                Resource.Concrete: 20
             },
             'production': {
-                EncasedIndustrialBeam: 4
+                Resource.EncasedIndustrialBeam: 4
             }
         },
         'Encased Plutonium Cell': {
             'consumption': {
-                PlutoniumPellet: 10,
-                Concrete: 20
+                Resource.PlutoniumPellet: 10,
+                Resource.Concrete: 20
             },
             'production': {
-                EncasedPlutoniumCell: 5
+                Resource.EncasedPlutoniumCell: 5
             }
         },
         'Fabric': {
             'consumption': {
-                Mycelia: 15,
-                Biomass: 75
+                Resource.Mycelia: 15,
+                Resource.Biomass: 75
             },
             'production': {
-                Fabric: 15
+                Resource.Fabric: 15
             }
         },
         'Fine Black Powder': {
             'consumption': {
                 Sulfur: 7.5,
-                CompactedCoal: 3.75
+                Resource.CompactedCoal: 3.75
             },
             'production': {
-                BlackPowder: 15
+                Resource.BlackPowder: 15
             }
         },
         'Fine Concrete': {
             'consumption': {
-                Silica: 7.5,
+                Resource.Silica: 7.5,
                 Limestone: 30
             },
             'production': {
-                Concrete: 25
+                Resource.Concrete: 25
             }
         },
         'Fused Quickwire': {
             'consumption': {
-                CateriumIngot: 7.5,
-                CopperIngot: 37.5
+                Resource.CateriumIngot: 7.5,
+                Resource.CopperIngot: 37.5
             },
             'production': {
-                Quickwire: 90
+                Resource.Quickwire: 90
             }
         },
         'Fused Wire': {
             'consumption': {
-                CopperIngot: 12,
-                CateriumIngot: 3
+                Resource.CopperIngot: 12,
+                Resource.CateriumIngot: 3
             },
             'production': {
-                Wire: 90
+                Resource.Wire: 90
             }
         },
         'Gas Nobelisk': {
             'consumption': {
-                Nobelisk: 5,
-                Biomass: 50
+                Resource.Nobelisk: 5,
+                Resource.Biomass: 50
             },
             'production': {
-                GasNobelisk: 5
+                Resource.GasNobelisk: 5
             }
         },
         'Heat Exchanger': {
             'consumption': {
-                AluminumCasing: 30,
-                Rubber: 30
+                Resource.AluminumCasing: 30,
+                Resource.Rubber: 30
             },
             'production': {
-                HeatSink: 10
+                Resource.HeatSink: 10
             }
         },
         'Heat Sink': {
             'consumption': {
-                AlcladAluminumSheet: 37.5,
-                CopperSheet: 22.5
+                Resource.AlcladAluminumSheet: 37.5,
+                Resource.CopperSheet: 22.5
             },
             'production': {
-                HeatSink: 7.5
+                Resource.HeatSink: 7.5
             }
         },
         'Homing Riffle Ammo': {
             'consumption': {
-                RifleAmmo: 50,
-                HighSpeedConnector: 2.5
+                Resource.RifleAmmo: 50,
+                Resource.HighSpeedConnector: 2.5
             },
             'production': {
-                HomingRifleAmmo: 25
+                Resource.HomingRifleAmmo: 25
             }
         },
         'Insulated Cable': {
             'consumption': {
-                Wire: 45,
-                Rubber: 30
+                Resource.Wire: 45,
+                Resource.Rubber: 30
             },
             'production': {
-                Cable: 100
+                Resource.Cable: 100
             }
         },
         'Modular Frame': {
             'consumption': {
-                ReinforcedIronPlate: 3,
-                IronRod: 12
+                Resource.ReinforcedIronPlate: 3,
+                Resource.IronRod: 12
             },
             'production': {
-                ModularFrame: 2
+                Resource.ModularFrame: 2
             }
         },
         'Motor': {
             'consumption': {
-                Rotor: 10,
-                Stator: 10
+                Resource.Rotor: 10,
+                Resource.Stator: 10
             },
             'production': {
-                Motor: 5
+                Resource.Motor: 5
             }
         },
         'Nobelisk': {
             'consumption': {
-                SteelPipe: 20,
-                BlackPowder: 20
+                Resource.SteelPipe: 20,
+                Resource.BlackPowder: 20
             },
             'production': {
-                Nobelisk: 10
+                Resource.Nobelisk: 10
             }
         },
         'OC Supercomputer': {
             'consumption': {
-                RadioControlUnit: 9,
-                CoolingSystem: 9
+                Resource.RadioControlUnit: 9,
+                Resource.CoolingSystem: 9
             },
             'production': {
-                Supercomputer: 3
+                Resource.Supercomputer: 3
             }
         },
         'Plutonium Fuel Unit': {
             'consumption': {
-                EncasedPlutoniumCell: 10,
-                PressureConversionCube: 0.5
+                Resource.EncasedPlutoniumCell: 10,
+                Resource.PressureConversionCube: 0.5
             },
             'production': {
-                PlutoniumFuelRod: 0.5
+                Resource.PlutoniumFuelRod: 0.5
             }
         },
         'Pressure Conversion Cube': {
             'consumption': {
-                FusedModularFrame: 1,
-                RadioControlUnit: 2
+                Resource.FusedModularFrame: 1,
+                Resource.RadioControlUnit: 2
             },
             'production': {
-                PressureConversionCube: 1
+                Resource.PressureConversionCube: 1
             }
         },
         'Pulse Nobelisk': {
             'consumption': {
-                Nobelisk: 5,
-                CrystalOscillator: 1
+                Resource.Nobelisk: 5,
+                Resource.CrystalOscillator: 1
             },
             'production': {
-                PulseNobelisk: 5
+                Resource.PulseNobelisk: 5
             }
         },
         'Quickwire Cable': {
             'consumption': {
-                Quickwire: 7.5,
-                Rubber: 5
+                Resource.Quickwire: 7.5,
+                Resource.Rubber: 5
             },
             'production': {
-                Cable: 27.5
+                Resource.Cable: 27.5
             }
         },
         'Quickwire Stator': {
             'consumption': {
-                SteelPipe: 16,
-                Quickwire: 60
+                Resource.SteelPipe: 16,
+                Resource.Quickwire: 60
             },
             'production': {
-                Stator: 2
+                Resource.Stator: 2
             }
         },
         'Reinforced Iron Plate': {
             'consumption': {
-                IronPlate: 30,
-                Screw: 60
+                Resource.IronPlate: 30,
+                Resource.Screw: 60
             },
             'production': {
-                ReinforcedIronPlate: 5
+                Resource.ReinforcedIronPlate: 5
             }
         },
         'Rifle Ammo': {
             'consumption': {
-                CopperSheet: 15,
-                SmokelessPowder: 10
+                Resource.CopperSheet: 15,
+                Resource.SmokelessPowder: 10
             },
             'production': {
-                RifleAmmo: 75
+                Resource.RifleAmmo: 75
             }
         },
         'Rotor': {
             'consumption': {
-                IronRod: 20,
-                Screw: 100
+                Resource.IronRod: 20,
+                Resource.Screw: 100
             },
             'production': {
-                Rotor: 4
+                Resource.Rotor: 4
             }
         },
         'Rubber Concrete': {
             'consumption': {
                 Limestone: 50,
-                Rubber: 10
+                Resource.Rubber: 10
             },
             'production': {
-                Concrete: 45
+                Resource.Concrete: 45
             }
         },
         'Shatter Rebar': {
             'consumption': {
-                IronRebar: 10,
-                QuartzCrystal: 15
+                Resource.IronRebar: 10,
+                Resource.QuartzCrystal: 15
             },
             'production': {
-                ShatterRebar: 5
+                Resource.ShatterRebar: 5
             }
         },
         'Silicon Circuit Board': {
             'consumption': {
-                CopperSheet: 27.5,
-                Silica: 27.5
+                Resource.CopperSheet: 27.5,
+                Resource.Silica: 27.5
             },
             'production': {
-                CircuitBoard: 12.5
+                Resource.CircuitBoard: 12.5
             }
         },
         'Smart Plating': {
             'consumption': {
-                ReinforcedIronPlate: 2,
-                Rotor: 2
+                Resource.ReinforcedIronPlate: 2,
+                Resource.Rotor: 2
             },
             'production': {
-                SmartPlating: 2
+                Resource.SmartPlating: 2
             }
         },
         'Stator': {
             'consumption': {
-                SteelPipe: 15,
-                Wire: 40
+                Resource.SteelPipe: 15,
+                Resource.Wire: 40
             },
             'production': {
-                Stator: 5
+                Resource.Stator: 5
             }
         },
         'Steel Coated Plate': {
             'consumption': {
-                SteelIngot: 7.5,
-                Plastic: 5
+                Resource.SteelIngot: 7.5,
+                Resource.Plastic: 5
             },
             'production': {
-                IronPlate: 45
+                Resource.IronPlate: 45
             }
         },
         'Steel Rotor': {
             'consumption': {
-                SteelPipe: 10,
-                Wire: 30
+                Resource.SteelPipe: 10,
+                Resource.Wire: 30
             },
             'production': {
-                Rotor: 5
+                Resource.Rotor: 5
             }
         },
         'Steeled Frame': {
             'consumption': {
-                ReinforcedIronPlate: 2,
-                SteelPipe: 10
+                Resource.ReinforcedIronPlate: 2,
+                Resource.SteelPipe: 10
             },
             'production': {
-                ModularFrame: 3
+                Resource.ModularFrame: 3
             }
         },
         'Stitched Iron Plate': {
             'consumption': {
-                IronPlate: 18.75,
-                Wire: 37.5
+                Resource.IronPlate: 18.75,
+                Resource.Wire: 37.5
             },
             'production': {
-                ReinforcedIronPlate: 5.6
+                Resource.ReinforcedIronPlate: 5.6
             }
         },
         'Stun Rebar': {
             'consumption': {
-                IronRebar: 10,
-                Quickwire: 5
+                Resource.IronRebar: 10,
+                Resource.Quickwire: 5
             },
             'production': {
-                StunRebar: 10
+                Resource.StunRebar: 10
             }
         },
         'Versatile Framework': {
             'consumption': {
-                ModularFrame: 2.5,
-                SteelBeam: 30
+                Resource.ModularFrame: 2.5,
+                Resource.SteelBeam: 30
             },
             'production': {
-                VersatileFramework: 5
+                Resource.VersatileFramework: 5
             }
         },
     }
@@ -564,142 +567,142 @@ class Blender(Machine):
     recipes = {
         'Battery': {
             'consumption': {
-                SulfuricAcid: 50,
-                AluminaSolution: 40,
-                AluminumCasing: 20
+                Resource.SulfuricAcid: 50,
+                Resource.AluminaSolution: 40,
+                Resource.AluminumCasing: 20
             },
             'production': {
-                Battery: 20,
-                Water: 30
+                Resource.Battery: 20,
+                Resource.Water: 30
             }
         },
         'Cooling Device': {
             'consumption': {
-                HeatSink: 9.375,
-                Motor: 1.875,
-                NitrogenGas: 45
+                Resource.HeatSink: 9.375,
+                Resource.Motor: 1.875,
+                Resource.NitrogenGas: 45
             },
             'production': {
-                CoolingSystem: 3.8
+                Resource.CoolingSystem: 3.8
             }
         },
         'Cooling System': {
             'consumption': {
-                HeatSink: 12,
-                Rubber: 12,
-                Water: 30,
-                NitrogenGas: 150
+                Resource.HeatSink: 12,
+                Resource.Rubber: 12,
+                Resource.Water: 30,
+                Resource.NitrogenGas: 150
             },
             'production': {
-                CoolingSystem: 6
+                Resource.CoolingSystem: 6
             }
         },
         'Diluted Fuel': {
             'consumption': {
-                HeavyOilResidue: 50,
-                Water: 100
+                Resource.HeavyOilResidue: 50,
+                Resource.Water: 100
             },
             'production': {
-                Fuel: 100
+                Resource.Fuel: 100
             }
         },
         'Encased Uranium Cell': {
             'consumption': {
                 Uranium: 50,
-                Concrete: 15,
-                SulfuricAcid: 40
+                Resource.Concrete: 15,
+                Resource.SulfuricAcid: 40
             },
             'production': {
-                EncasedUraniumCell: 25,
-                SulfuricAcid: 10
+                Resource.EncasedUraniumCell: 25,
+                Resource.SulfuricAcid: 10
             }
         },
         'Fertile Uranium': {
             'consumption': {
                 Uranium: 25,
-                UraniumWaste: 25,
-                NitricAcid: 15,
-                SulfuricAcid: 25
+                Resource.UraniumWaste: 25,
+                Resource.NitricAcid: 15,
+                Resource.SulfuricAcid: 25
             },
             'production': {
-                NonFissileUranium: 100,
-                Water: 40
+                Resource.NonFissileUranium: 100,
+                Resource.Water: 40
             }
         },
         'Fused Modular Frame': {
             'consumption': {
-                HeavyModularFrame: 1.5,
-                AluminumCasing: 75,
-                NitrogenGas: 37.5
+                Resource.HeavyModularFrame: 1.5,
+                Resource.AluminumCasing: 75,
+                Resource.NitrogenGas: 37.5
             },
             'production': {
-                FusedModularFrame: 1.5
+                Resource.FusedModularFrame: 1.5
             }
         },
         'Heat-Fused Frame': {
             'consumption': {
-                HeavyModularFrame: 3,
-                AluminumIngot: 150,
-                NitricAcid: 24,
-                Fuel: 30
+                Resource.HeavyModularFrame: 3,
+                Resource.AluminumIngot: 150,
+                Resource.NitricAcid: 24,
+                Resource.Fuel: 30
             },
             'production': {
-                FusedModularFrame: 3
+                Resource.FusedModularFrame: 3
             }
         },
         'Instant Scrap': {
             'consumption': {
                 Bauxite: 150,
                 Coal: 100,
-                SulfuricAcid: 50,
-                Water: 60
+                Resource.SulfuricAcid: 50,
+                Resource.Water: 60
             },
             'production': {
-                AluminumScrap: 300,
-                Water: 50
+                Resource.AluminumScrap: 300,
+                Resource.Water: 50
             }
         },
         'Nitric Acid': {
             'consumption': {
-                NitrogenGas: 120,
-                Water: 30,
-                IronPlate: 10
+                Resource.NitrogenGas: 120,
+                Resource.Water: 30,
+                Resource.IronPlate: 10
             },
             'production': {
-                NitricAcid: 30
+                Resource.NitricAcid: 30
             }
         },
         'Non-fissile Uranium': {
             'consumption': {
-                UraniumWaste: 37.5,
-                Silica: 25,
-                NitricAcid: 15,
-                SulfuricAcid: 15
+                Resource.UraniumWaste: 37.5,
+                Resource.Silica: 25,
+                Resource.NitricAcid: 15,
+                Resource.SulfuricAcid: 15
             },
             'production': {
-                NonFissileUranium: 50,
-                Water: 15
+                Resource.NonFissileUranium: 50,
+                Resource.Water: 15
             }
         },
         'Turbo Blend Fuel': {
             'consumption': {
-                Fuel: 15,
-                HeavyOilResidue: 30,
+                Resource.Fuel: 15,
+                Resource.HeavyOilResidue: 30,
                 Sulfur: 22.5,
-                PetroleumCoke: 22.5
+                Resource.PetroleumCoke: 22.5
             },
             'production': {
-                Turbofuel: 45
+                Resource.Turbofuel: 45
             }
         },
         'Turbo Rifle Ammo': {
             'consumption': {
-                RifleAmmo: 125,
-                AluminumCasing: 15,
-                Turbofuel: 15
+                Resource.RifleAmmo: 125,
+                Resource.AluminumCasing: 15,
+                Resource.Turbofuel: 15
             },
             'production': {
-                TurboRifleAmmo: 250
+                Resource.TurboRifleAmmo: 250
             }
         },
     }
@@ -709,23 +712,23 @@ class Constructor(Machine):
     recipes = {
         'Alien DNA Capsule': {
             'consumption': {
-                AlienProtein: 10
+                Resource.AlienProtein: 10
             },
             'production': {
-                AlienDNACapsule: 10
+                Resource.AlienDNACapsule: 10
             }
         },
         'Aluminum Casing': {
             'consumption': {
-                AluminumIngot: 90
+                Resource.AluminumIngot: 90
             },
             'production': {
-                AluminumCasing: 60
+                Resource.AluminumCasing: 60
             }
         },
         'Biocoal': {
             'consumption': {
-                Biomass: 37.5
+                Resource.Biomass: 37.5
             },
             'production': {
                 Coal: 45
@@ -733,63 +736,63 @@ class Constructor(Machine):
         },
         'Biomass (Alien Protein)': {
             'consumption': {
-                AlienProtein: 15
+                Resource.AlienProtein: 15
             },
             'production': {
-                Biomass: 1500
+                Resource.Biomass: 1500
             }
         },
         'Biomass (Leaves)': {
             'consumption': {
-                Leaves: 120
+                Resource.Leaves: 120
             },
             'production': {
-                Biomass: 60
+                Resource.Biomass: 60
             }
         },
         'Biomass (Alien Mycelia)': {
             'consumption': {
-                Mycelia: 150
+                Resource.Mycelia: 150
             },
             'production': {
-                Biomass: 150
+                Resource.Biomass: 150
             }
         },
         'Biomass (Wood)': {
             'consumption': {
-                Wood: 60
+                Resource.Wood: 60
             },
             'production': {
-                Biomass: 300
+                Resource.Biomass: 300
             }
         },
         'Cable': {
             'consumption': {
-                Wire: 60
+                Resource.Wire: 60
             },
             'production': {
-                Cable: 30
+                Resource.Cable: 30
             }
         },
         'Cast Screw': {
             'consumption': {
-                IronIngot: 12.5
+                Resource.IronIngot: 12.5
             },
             'production': {
-                Screw: 50
+                Resource.Screw: 50
             }
         },
         'Caterium Wire': {
             'consumption': {
-                CateriumIngot: 15
+                Resource.CateriumIngot: 15
             },
             'production': {
-                Wire: 120
+                Resource.Wire: 120
             }
         },
         'Charcoal': {
             'consumption': {
-                Wood: 15
+                Resource.Wood: 15
             },
             'production': {
                 Coal: 150
@@ -797,10 +800,10 @@ class Constructor(Machine):
         },
         'Color Cartridge': {
             'consumption': {
-                FlowerPetals: 50
+                Resource.FlowerPetals: 50
             },
             'production': {
-                ColorCartridge: 100
+                Resource.ColorCartridge: 100
             }
         },
         'Concrete': {
@@ -808,111 +811,111 @@ class Constructor(Machine):
                 Limestone: 45
             },
             'production': {
-                Concrete: 15
+                Resource.Concrete: 15
             }
         },
         'Copper Powder': {
             'consumption': {
-                CopperIngot: 300
+                Resource.CopperIngot: 300
             },
             'production': {
-                CopperPowder: 50
+                Resource.CopperPowder: 50
             }
         },
         'Copper Sheet': {
             'consumption': {
-                CopperIngot: 20
+                Resource.CopperIngot: 20
             },
             'production': {
-                CopperSheet: 10
+                Resource.CopperSheet: 10
             }
         },
         'Empty Canister': {
             'consumption': {
-                Plastic: 30
+                Resource.Plastic: 30
             },
             'production': {
-                EmptyCanister: 60
+                Resource.EmptyCanister: 60
             }
         },
         'Empty Fluid Tank': {
             'consumption': {
-                AluminumIngot: 60
+                Resource.AluminumIngot: 60
             },
             'production': {
-                EmptyFluidTank: 60
+                Resource.EmptyFluidTank: 60
             }
         },
         'Hatcher Protein': {
             'consumption': {
-                HatcherRemains: 20
+                Resource.HatcherRemains: 20
             },
             'production': {
-                AlienProtein: 20
+                Resource.AlienProtein: 20
             }
         },
         'Hog Protein': {
             'consumption': {
-                HogRemains: 20
+                Resource.HogRemains: 20
             },
             'production': {
-                AlienProtein: 20
+                Resource.AlienProtein: 20
             }
         },
         'Iron Plate': {
             'consumption': {
-                IronIngot: 30
+                Resource.IronIngot: 30
             },
             'production': {
-                IronPlate: 20
+                Resource.IronPlate: 20
             }
         },
         'Iron Rebar': {
             'consumption': {
-                IronRod: 15
+                Resource.IronRod: 15
             },
             'production': {
-                IronRebar: 15
+                Resource.IronRebar: 15
             }
         },
         'Iron Rod': {
             'consumption': {
-                IronIngot: 15
+                Resource.IronIngot: 15
             },
             'production': {
-                IronRod: 15
+                Resource.IronRod: 15
             }
         },
         'Iron Wire': {
             'consumption': {
-                IronIngot: 12.5
+                Resource.IronIngot: 12.5
             },
             'production': {
-                Wire: 22.5
+                Resource.Wire: 22.5
             }
         },
         'Power Shard (1)': {
             'consumption': {
-                BluePowerSlug: 7.5
+                Resource.BluePowerSlug: 7.5
             },
             'production': {
-                PowerShard: 7.5
+                Resource.PowerShard: 7.5
             }
         },
         'Power Shard (2)': {
             'consumption': {
-                YellowPowerSlug: 5
+                Resource.YellowPowerSlug: 5
             },
             'production': {
-                PowerShard: 10
+                Resource.PowerShard: 10
             }
         },
         'Power Shard (5)': {
             'consumption': {
-                PurplePowerSlug: 2.5
+                Resource.PurplePowerSlug: 2.5
             },
             'production': {
-                PowerShard: 12.5
+                Resource.PowerShard: 12.5
             }
         },
         'Quartz Crystal': {
@@ -920,23 +923,23 @@ class Constructor(Machine):
                 RawQuartz: 37.5
             },
             'production': {
-                QuartzCrystal: 22.5
+                Resource.QuartzCrystal: 22.5
             }
         },
         'Quickwire': {
             'consumption': {
-                CateriumIngot: 12
+                Resource.CateriumIngot: 12
             },
             'production': {
-                Quickwire: 60
+                Resource.Quickwire: 60
             }
         },
         'Screw': {
             'consumption': {
-                IronRod: 10
+                Resource.IronRod: 10
             },
             'production': {
-                Screw: 40
+                Resource.Screw: 40
             }
         },
         'Silica': {
@@ -944,79 +947,79 @@ class Constructor(Machine):
                 RawQuartz: 22.5
             },
             'production': {
-                Silica: 37.5
+                Resource.Silica: 37.5
             }
         },
         'Solid Biofuel': {
             'consumption': {
-                Biomass: 120
+                Resource.Biomass: 120
             },
             'production': {
-                SolidBiofuel: 60
+                Resource.SolidBiofuel: 60
             }
         },
         'Spitter Protein': {
             'consumption': {
-                PlasmaSpitterRemains: 20
+                Resource.PlasmaSpitterRemains: 20
             },
             'production': {
-                AlienProtein: 20
+                Resource.AlienProtein: 20
             }
         },
         'Steel Beam': {
             'consumption': {
-                SteelIngot: 60
+                Resource.SteelIngot: 60
             },
             'production': {
-                SteelBeam: 15
+                Resource.SteelBeam: 15
             }
         },
         'Steel Canister': {
             'consumption': {
-                SteelIngot: 60
+                Resource.SteelIngot: 60
             },
             'production': {
-                EmptyCanister: 40
+                Resource.EmptyCanister: 40
             }
         },
         'Steel Pipe': {
             'consumption': {
-                SteelIngot: 30
+                Resource.SteelIngot: 30
             },
             'production': {
-                SteelPipe: 20
+                Resource.SteelPipe: 20
             }
         },
         'Steel Rod': {
             'consumption': {
-                SteelIngot: 12
+                Resource.SteelIngot: 12
             },
             'production': {
-                IronRod: 48
+                Resource.IronRod: 48
             }
         },
         'Steel Screw': {
             'consumption': {
-                SteelBeam: 5
+                Resource.SteelBeam: 5
             },
             'production': {
-                Screw: 260
+                Resource.Screw: 260
             }
         },
         'Stinger Protein': {
             'consumption': {
-                StingerRemains: 20
+                Resource.StingerRemains: 20
             },
             'production': {
-                AlienProtein: 20
+                Resource.AlienProtein: 20
             }
         },
         'Wire': {
             'consumption': {
-                CopperIngot: 15
+                Resource.CopperIngot: 15
             },
             'production': {
-                Wire: 30
+                Resource.Wire: 30
             }
         },
     }
@@ -1026,29 +1029,29 @@ class Foundry(Machine):
     recipes = {
         'Aluminum Ingot': {
             'consumption': {
-                AluminumScrap: 90,
-                Silica: 75
+                Resource.AluminumScrap: 90,
+                Resource.Silica: 75
             },
             'production': {
-                AluminumIngot: 60
+                Resource.AluminumIngot: 60
             }
         },
         'Coke Steel Ingot': {
             'consumption': {
                 IronOre: 75,
-                PetroleumCoke: 75
+                Resource.PetroleumCoke: 75
             },
             'production': {
-                SteelIngot: 100
+                Resource.SteelIngot: 100
             }
         },
         'Compacted Steel Ingot': {
             'consumption': {
                 IronOre: 22.5,
-                CompactedCoal: 11.25
+                Resource.CompactedCoal: 11.25
             },
             'production': {
-                SteelIngot: 37.5
+                Resource.SteelIngot: 37.5
             }
         },
         'Copper Alloy Ingot': {
@@ -1057,7 +1060,7 @@ class Foundry(Machine):
                 IronOre: 25
             },
             'production': {
-                CopperIngot: 100
+                Resource.CopperIngot: 100
             }
         },
         'Iron Alloy Ingot': {
@@ -1066,16 +1069,16 @@ class Foundry(Machine):
                 CopperOre: 20
             },
             'production': {
-                IronIngot: 50
+                Resource.IronIngot: 50
             }
         },
         'Solid Steel Ingot': {
             'consumption': {
-                IronIngot: 40,
+                Resource.IronIngot: 40,
                 Coal: 40
             },
             'production': {
-                SteelIngot: 60
+                Resource.SteelIngot: 60
             }
         },
         'Steel Ingot': {
@@ -1084,7 +1087,7 @@ class Foundry(Machine):
                 Coal: 45
             },
             'production': {
-                SteelIngot: 45
+                Resource.SteelIngot: 45
             }
         },
     }
@@ -1094,7 +1097,7 @@ class FuelGenerator(Machine):
     recipes = {
         'Fuel': {
             'consumption': {
-                Fuel: 12
+                Resource.Fuel: 12
             },
             'production': {
 
@@ -1102,7 +1105,7 @@ class FuelGenerator(Machine):
         },
         'Liquid Biofuel': {
             'consumption': {
-                LiquidBiofuel: 12
+                Resource.LiquidBiofuel: 12
             },
             'production': {
 
@@ -1110,7 +1113,7 @@ class FuelGenerator(Machine):
         },
         'Turbofuel': {
             'consumption': {
-                Turbofuel: 4.5
+                Resource.Turbofuel: 4.5
             },
             'production': {
 
@@ -1127,402 +1130,402 @@ class Manufacturer(Machine):
     recipes = {
         'Adaptive Control Unit': {
             'consumption': {
-                AutomatedWiring: 7.5,
-                CircuitBoard: 5,
-                HeavyModularFrame: 1,
-                Computer: 1
+                Resource.AutomatedWiring: 7.5,
+                Resource.CircuitBoard: 5,
+                Resource.HeavyModularFrame: 1,
+                Resource.Computer: 1
             },
             'production': {
-                AdaptiveControlUnit: 1
+                Resource.AdaptiveControlUnit: 1
             }
         },
         'Automated Miner': {
             'consumption': {
-                Motor: 1,
-                SteelPipe: 4,
-                IronRod: 4,
-                IronPlate: 2
+                Resource.Motor: 1,
+                Resource.SteelPipe: 4,
+                Resource.IronRod: 4,
+                Resource.IronPlate: 2
             },
             'production': {
-                PortableMiner: 1
+                Resource.PortableMiner: 1
             }
         },
         'Automated Speed Wiring': {
             'consumption': {
-                Stator: 3.75,
-                Wire: 75,
-                HighSpeedConnector: 1.875
+                Resource.Stator: 3.75,
+                Resource.Wire: 75,
+                Resource.HighSpeedConnector: 1.875
             },
             'production': {
-                AutomatedWiring: 7.5
+                Resource.AutomatedWiring: 7.5
             }
         },
         'Beacon': {
             'consumption': {
-                IronPlate: 22.5,
-                IronRod: 7.5,
-                Wire: 112.5,
-                Cable: 15
+                Resource.IronPlate: 22.5,
+                Resource.IronRod: 7.5,
+                Resource.Wire: 112.5,
+                Resource.Cable: 15
             },
             'production': {
-                Beacon: 7.5
+                Resource.Beacon: 7.5
             }
         },
         'Caterium Computer': {
             'consumption': {
-                CircuitBoard: 26.25,
-                Quickwire: 105,
-                Rubber: 45
+                Resource.CircuitBoard: 26.25,
+                Resource.Quickwire: 105,
+                Resource.Rubber: 45
             },
             'production': {
-                Computer: 3.8
+                Resource.Computer: 3.8
             }
         },
         'Classic Battery': {
             'consumption': {
                 Sulfur: 45,
-                AlcladAluminumSheet: 52.5,
-                Plastic: 60,
-                Wire: 90
+                Resource.AlcladAluminumSheet: 52.5,
+                Resource.Plastic: 60,
+                Resource.Wire: 90
             },
             'production': {
-                Battery: 30
+                Resource.Battery: 30
             }
         },
         'Computer': {
             'consumption': {
-                CircuitBoard: 25,
-                Cable: 22.5,
-                Plastic: 45,
-                Screw: 130
+                Resource.CircuitBoard: 25,
+                Resource.Cable: 22.5,
+                Resource.Plastic: 45,
+                Resource.Screw: 130
             },
             'production': {
-                Computer: 2.5
+                Resource.Computer: 2.5
             }
         },
         'Crystal Beacon': {
             'consumption': {
-                SteelBeam: 2,
-                SteelPipe: 8,
-                CrystalOscillator: 0.5
+                Resource.SteelBeam: 2,
+                Resource.SteelPipe: 8,
+                Resource.CrystalOscillator: 0.5
             },
             'production': {
-                Beacon: 10
+                Resource.Beacon: 10
             }
         },
         'Crystal Oscillator': {
             'consumption': {
-                QuartzCrystal: 18,
-                Cable: 14,
-                ReinforcedIronPlate: 2.5
+                Resource.QuartzCrystal: 18,
+                Resource.Cable: 14,
+                Resource.ReinforcedIronPlate: 2.5
             },
             'production': {
-                CrystalOscillator: 1
+                Resource.CrystalOscillator: 1
             }
         },
         'Explosive Rebar': {
             'consumption': {
-                IronRebar: 10,
-                SmokelessPowder: 10,
-                SteelPipe: 10
+                Resource.IronRebar: 10,
+                Resource.SmokelessPowder: 10,
+                Resource.SteelPipe: 10
             },
             'production': {
-                ExplosiveRebar: 5
+                Resource.ExplosiveRebar: 5
             }
         },
         'Flexible Framework': {
             'consumption': {
-                ModularFrame: 3.75,
-                SteelBeam: 22.5,
-                Rubber: 30
+                Resource.ModularFrame: 3.75,
+                Resource.SteelBeam: 22.5,
+                Resource.Rubber: 30
             },
             'production': {
-                VersatileFramework: 7.5
+                Resource.VersatileFramework: 7.5
             }
         },
         'Gas Filter': {
             'consumption': {
                 Coal: 37.5,
-                Rubber: 15,
-                Fabric: 15
+                Resource.Rubber: 15,
+                Resource.Fabric: 15
             },
             'production': {
-                GasFilter: 7.5
+                Resource.GasFilter: 7.5
             }
         },
         'Heavy Encased Frame': {
             'consumption': {
-                ModularFrame: 7.5,
-                EncasedIndustrialBeam: 9.375,
-                SteelPipe: 33.75,
-                Concrete: 20.625
+                Resource.ModularFrame: 7.5,
+                Resource.EncasedIndustrialBeam: 9.375,
+                Resource.SteelPipe: 33.75,
+                Resource.Concrete: 20.625
             },
             'production': {
-                HeavyModularFrame: 2.8
+                Resource.HeavyModularFrame: 2.8
             }
         },
         'Heavy Flexible Frame': {
             'consumption': {
-                ModularFrame: 18.75,
-                EncasedIndustrialBeam: 11.25,
-                Rubber: 75,
-                Screw: 390
+                Resource.ModularFrame: 18.75,
+                Resource.EncasedIndustrialBeam: 11.25,
+                Resource.Rubber: 75,
+                Resource.Screw: 390
             },
             'production': {
-                HeavyModularFrame: 3.8
+                Resource.HeavyModularFrame: 3.8
             }
         },
         'Heavy Modular Frame': {
             'consumption': {
-                ModularFrame: 10,
-                SteelPipe: 30,
-                EncasedIndustrialBeam: 10,
-                Screw: 200
+                Resource.ModularFrame: 10,
+                Resource.SteelPipe: 30,
+                Resource.EncasedIndustrialBeam: 10,
+                Resource.Screw: 200
             },
             'production': {
-                HeavyModularFrame: 2
+                Resource.HeavyModularFrame: 2
             }
         },
         'High-Speed Connector': {
             'consumption': {
-                Quickwire: 210,
-                Cable: 37.5,
-                CircuitBoard: 3.75
+                Resource.Quickwire: 210,
+                Resource.Cable: 37.5,
+                Resource.CircuitBoard: 3.75
             },
             'production': {
-                HighSpeedConnector: 3.8
+                Resource.HighSpeedConnector: 3.8
             }
         },
         'Infused Uranium Cell': {
             'consumption': {
                 Uranium: 25,
-                Silica: 15,
+                Resource.Silica: 15,
                 Sulfur: 25,
-                Quickwire: 75
+                Resource.Quickwire: 75
             },
             'production': {
-                EncasedUraniumCell: 20
+                Resource.EncasedUraniumCell: 20
             }
         },
         'Insulated Crystal Oscillator': {
             'consumption': {
-                QuartzCrystal: 18.75,
-                Rubber: 13.125,
-                AILimiter: 1.875
+                Resource.QuartzCrystal: 18.75,
+                Resource.Rubber: 13.125,
+                Resource.AILimiter: 1.875
             },
             'production': {
-                CrystalOscillator: 1.9
+                Resource.CrystalOscillator: 1.9
             }
         },
         'Iodine Infused Filter': {
             'consumption': {
-                GasFilter: 3.75,
-                Quickwire: 30,
-                AluminumCasing: 3.75
+                Resource.GasFilter: 3.75,
+                Resource.Quickwire: 30,
+                Resource.AluminumCasing: 3.75
             },
             'production': {
-                IodineInfusedFilter: 3.8
+                Resource.IodineInfusedFilter: 3.8
             }
         },
         'Magnetic Field Generator': {
             'consumption': {
-                VersatileFramework: 2.5,
-                ElectromagneticControlRod: 1,
-                Battery: 5
+                Resource.VersatileFramework: 2.5,
+                Resource.ElectromagneticControlRod: 1,
+                Resource.Battery: 5
             },
             'production': {
-                MagneticFieldGenerator: 1
+                Resource.MagneticFieldGenerator: 1
             }
         },
         'Modular Engine': {
             'consumption': {
-                Motor: 2,
-                Rubber: 15,
-                SmartPlating: 2
+                Resource.Motor: 2,
+                Resource.Rubber: 15,
+                Resource.SmartPlating: 2
             },
             'production': {
-                ModularEngine: 1
+                Resource.ModularEngine: 1
             }
         },
         'Nuke Nobelisk': {
             'consumption': {
-                Nobelisk: 2.5,
-                EncasedUraniumCell: 10,
-                SmokelessPowder: 5,
-                AILimiter: 3
+                Resource.Nobelisk: 2.5,
+                Resource.EncasedUraniumCell: 10,
+                Resource.SmokelessPowder: 5,
+                Resource.AILimiter: 3
             },
             'production': {
-                NukeNobelisk: 0.5
+                Resource.NukeNobelisk: 0.5
             }
         },
         'Plastic Smart Plating': {
             'consumption': {
-                ReinforcedIronPlate: 2.5,
-                Rotor: 2.5,
-                Plastic: 7.5
+                Resource.ReinforcedIronPlate: 2.5,
+                Resource.Rotor: 2.5,
+                Resource.Plastic: 7.5
             },
             'production': {
-                SmartPlating: 5
+                Resource.SmartPlating: 5
             }
         },
         'Plutonium Fuel Rod': {
             'consumption': {
-                EncasedPlutoniumCell: 7.5,
-                SteelBeam: 4.5,
-                ElectromagneticControlRod: 1.5,
-                HeatSink: 2.5
+                Resource.EncasedPlutoniumCell: 7.5,
+                Resource.SteelBeam: 4.5,
+                Resource.ElectromagneticControlRod: 1.5,
+                Resource.HeatSink: 2.5
             },
             'production': {
-                PlutoniumFuelRod: 0.3
+                Resource.PlutoniumFuelRod: 0.3
             }
         },
         'Radio Connection Unit': {
             'consumption': {
-                HeatSink: 15,
-                HighSpeedConnector: 7.5,
-                QuartzCrystal: 45
+                Resource.HeatSink: 15,
+                Resource.HighSpeedConnector: 7.5,
+                Resource.QuartzCrystal: 45
             },
             'production': {
-                RadioControlUnit: 3.8
+                Resource.RadioControlUnit: 3.8
             }
         },
         'Radio Control System': {
             'consumption': {
-                CrystalOscillator: 1.5,
-                CircuitBoard: 15,
-                AluminumCasing: 90,
-                Rubber: 45
+                Resource.CrystalOscillator: 1.5,
+                Resource.CircuitBoard: 15,
+                Resource.AluminumCasing: 90,
+                Resource.Rubber: 45
             },
             'production': {
-                RadioControlUnit: 2.5
+                Resource.RadioControlUnit: 2.5
             }
         },
         'Radio Control Unit': {
             'consumption': {
-                AluminumCasing: 40,
-                CrystalOscillator: 1.25,
-                Computer: 1.25
+                Resource.AluminumCasing: 40,
+                Resource.CrystalOscillator: 1.25,
+                Resource.Computer: 1.25
             },
             'production': {
-                RadioControlUnit: 2.5
+                Resource.RadioControlUnit: 2.5
             }
         },
         'Rigour Motor': {
             'consumption': {
-                Rotor: 3.75,
-                Stator: 3.75,
-                CrystalOscillator: 1.25
+                Resource.Rotor: 3.75,
+                Resource.Stator: 3.75,
+                Resource.CrystalOscillator: 1.25
             },
             'production': {
-                Motor: 7.5
+                Resource.Motor: 7.5
             }
         },
         'Silicon High-Speeed Connector': {
             'consumption': {
-                Quickwire: 90,
-                Silica: 37.5,
-                CircuitBoard: 3
+                Resource.Quickwire: 90,
+                Resource.Silica: 37.5,
+                Resource.CircuitBoard: 3
             },
             'production': {
-                HighSpeedConnector: 3
+                Resource.HighSpeedConnector: 3
             }
         },
         'Super-State Computer': {
             'consumption': {
-                Computer: 3.6,
-                ElectromagneticControlRod: 2.4,
-                Battery: 24,
-                Wire: 54
+                Resource.Computer: 3.6,
+                Resource.ElectromagneticControlRod: 2.4,
+                Resource.Battery: 24,
+                Resource.Wire: 54
             },
             'production': {
-                Supercomputer: 2.4
+                Resource.Supercomputer: 2.4
             }
         },
         'Supercomputer': {
             'consumption': {
-                Computer: 3.75,
-                AILimiter: 3.75,
-                HighSpeedConnector: 5.625,
-                Plastic: 52.5
+                Resource.Computer: 3.75,
+                Resource.AILimiter: 3.75,
+                Resource.HighSpeedConnector: 5.625,
+                Resource.Plastic: 52.5
             },
             'production': {
-                Supercomputer: 1.9
+                Resource.Supercomputer: 1.9
             }
         },
         'Thermal Propulsion Rocket': {
             'consumption': {
-                ModularEngine: 2.5,
-                TurboMotor: 1,
-                CoolingSystem: 3,
-                FusedModularFrame: 1
+                Resource.ModularEngine: 2.5,
+                Resource.TurboMotor: 1,
+                Resource.CoolingSystem: 3,
+                Resource.FusedModularFrame: 1
             },
             'production': {
-                ThermalPropulsionRocket: 1
+                Resource.ThermalPropulsionRocket: 1
             }
         },
         'Turbo Electric Motor': {
             'consumption': {
-                Motor: 6.5625,
-                RadioControlUnit: 8.4375,
-                ElectromagneticControlRod: 4.6875,
-                Rotor: 6.5625
+                Resource.Motor: 6.5625,
+                Resource.RadioControlUnit: 8.4375,
+                Resource.ElectromagneticControlRod: 4.6875,
+                Resource.Rotor: 6.5625
             },
             'production': {
-                TurboMotor: 2.8
+                Resource.TurboMotor: 2.8
             }
         },
         'Turbo Motor': {
             'consumption': {
-                CoolingSystem: 7.5,
-                RadioControlUnit: 3.75,
-                Motor: 7.5,
-                Rubber: 45
+                Resource.CoolingSystem: 7.5,
+                Resource.RadioControlUnit: 3.75,
+                Resource.Motor: 7.5,
+                Resource.Rubber: 45
             },
             'production': {
-                TurboMotor: 1.9
+                Resource.TurboMotor: 1.9
             }
         },
         'Turbo Pressure Motor': {
             'consumption': {
-                Motor: 7.5,
-                PressureConversionCube: 1.875,
-                PackagedNitrogenGas: 45,
-                Stator: 15
+                Resource.Motor: 7.5,
+                Resource.PressureConversionCube: 1.875,
+                Resource.PackagedNitrogenGas: 45,
+                Resource.Stator: 15
             },
             'production': {
-                TurboMotor: 3.8
+                Resource.TurboMotor: 3.8
             }
         },
         'Turbo Rifle Ammo': {
             'consumption': {
-                RifleAmmo: 125,
-                AluminumCasing: 15,
-                PackagedTurboFuel: 15
+                Resource.RifleAmmo: 125,
+                Resource.AluminumCasing: 15,
+                Resource.PackagedTurboFuel: 15
             },
             'production': {
-                TurboRifleAmmo: 250
+                Resource.TurboRifleAmmo: 250
             }
         },
         'Uranium Fuel Rod': {
             'consumption': {
-                EncasedUraniumCell: 20,
-                EncasedIndustrialBeam: 1.2,
-                ElectromagneticControlRod: 2
+                Resource.EncasedUraniumCell: 20,
+                Resource.EncasedIndustrialBeam: 1.2,
+                Resource.ElectromagneticControlRod: 2
             },
             'production': {
-                UraniumFuelRod: 0.4
+                Resource.UraniumFuelRod: 0.4
             }
         },
 
         'Uranium Fuel Unit': {
             'consumption': {
-                EncasedUraniumCell: 20,
-                ElectromagneticControlRod: 2,
-                CrystalOscillator: 0.6,
-                Beacon: 1.2
+                Resource.EncasedUraniumCell: 20,
+                Resource.ElectromagneticControlRod: 2,
+                Resource.CrystalOscillator: 0.6,
+                Resource.Beacon: 1.2
             },
             'production': {
-                UraniumFuelRod: 0.6
+                Resource.UraniumFuelRod: 0.6
             }
         },
     }
@@ -1532,182 +1535,182 @@ class Packager(Machine):
     recipes = {
         'Packaged Alumina Solution': {
             'consumption': {
-                AluminaSolution: 120,
-                EmptyCanister: 120
+                Resource.AluminaSolution: 120,
+                Resource.EmptyCanister: 120
             },
             'production': {
-                PackagedAluminaSolution: 120
+                Resource.PackagedAluminaSolution: 120
             }
         },
         'Packaged Fuel': {
             'consumption': {
-                Fuel: 40,
-                EmptyCanister: 40
+                Resource.Fuel: 40,
+                Resource.EmptyCanister: 40
             },
             'production': {
-                PackagedFuel: 40
+                Resource.PackagedFuel: 40
             }
         },
         'Packaged Heavy Oil Residue': {
             'consumption': {
-                HeavyOilResidue: 30,
-                EmptyCanister: 30
+                Resource.HeavyOilResidue: 30,
+                Resource.EmptyCanister: 30
             },
             'production': {
-                PackagedHeavyOilResidue: 30
+                Resource.PackagedHeavyOilResidue: 30
             }
         },
         'Packaged Liquid Biofuel': {
             'consumption': {
-                LiquidBiofuel: 40,
-                EmptyCanister: 40
+                Resource.LiquidBiofuel: 40,
+                Resource.EmptyCanister: 40
             },
             'production': {
-                PackagedLiquidBiofuel: 40
+                Resource.PackagedLiquidBiofuel: 40
             }
         },
         'Packaged Nitric Acid': {
             'consumption': {
-                NitricAcid: 30,
-                EmptyFluidTank: 30
+                Resource.NitricAcid: 30,
+                Resource.EmptyFluidTank: 30
             },
             'production': {
-                PackagedNitricAcid: 30
+                Resource.PackagedNitricAcid: 30
             }
         },
         'Packaged Nitrogen Gas': {
             'consumption': {
-                NitrogenGas: 240,
-                EmptyFluidTank: 60
+                Resource.NitrogenGas: 240,
+                Resource.EmptyFluidTank: 60
             },
             'production': {
-                PackagedNitrogenGas: 60
+                Resource.PackagedNitrogenGas: 60
             }
         },
         'Packaged Oil': {
             'consumption': {
                 CrudeOil: 30,
-                EmptyCanister: 30
+                Resource.EmptyCanister: 30
             },
             'production': {
-                PackagedOil: 30
+                Resource.PackagedOil: 30
             }
         },
         'Packaged Sulfuric Acid': {
             'consumption': {
-                SulfuricAcid: 40,
-                EmptyCanister: 40
+                Resource.SulfuricAcid: 40,
+                Resource.EmptyCanister: 40
             },
             'production': {
-                PackagedSulfuricAcid: 40
+                Resource.PackagedSulfuricAcid: 40
             }
         },
         'Packaged Turbofuel': {
             'consumption': {
-                Turbofuel: 20,
-                EmptyCanister: 20
+                Resource.Turbofuel: 20,
+                Resource.EmptyCanister: 20
             },
             'production': {
-                PackagedTurboFuel: 20
+                Resource.PackagedTurboFuel: 20
             }
         },
         'Packaged Water': {
             'consumption': {
-                Water: 60,
-                EmptyCanister: 60
+                Resource.Water: 60,
+                Resource.EmptyCanister: 60
             },
             'production': {
-                PackagedWater: 60
+                Resource.PackagedWater: 60
             }
         },
         'Unpackage Alumina Solution': {
             'consumption': {
-                PackagedAluminaSolution: 120
+                Resource.PackagedAluminaSolution: 120
             },
             'production': {
-                AluminaSolution: 120,
-                EmptyCanister: 120
+                Resource.AluminaSolution: 120,
+                Resource.EmptyCanister: 120
             }
         },
         'Unpackage Fuel': {
             'consumption': {
-                PackagedFuel: 60
+                Resource.PackagedFuel: 60
             },
             'production': {
-                Fuel: 60,
-                EmptyCanister: 60
+                Resource.Fuel: 60,
+                Resource.EmptyCanister: 60
             }
         },
         'Unpackage Heavy Oil Residue': {
             'consumption': {
-                PackagedHeavyOilResidue: 20
+                Resource.PackagedHeavyOilResidue: 20
             },
             'production': {
-                HeavyOilResidue: 20,
-                EmptyCanister: 20
+                Resource.HeavyOilResidue: 20,
+                Resource.EmptyCanister: 20
             }
         },
         'Unpackage Liquid Biofuel': {
             'consumption': {
-                PackagedLiquidBiofuel: 60
+                Resource.PackagedLiquidBiofuel: 60
             },
             'production': {
-                LiquidBiofuel: 60,
-                EmptyCanister: 60
+                Resource.LiquidBiofuel: 60,
+                Resource.EmptyCanister: 60
             }
         },
         'Unpackage Nitric Acid': {
             'consumption': {
-                PackagedNitricAcid: 20
+                Resource.PackagedNitricAcid: 20
             },
             'production': {
-                NitricAcid: 20,
-                EmptyFluidTank: 20
+                Resource.NitricAcid: 20,
+                Resource.EmptyFluidTank: 20
             }
         },
         'Unpackage Nitrogen Gas': {
             'consumption': {
-                PackagedNitrogenGas: 60
+                Resource.PackagedNitrogenGas: 60
             },
             'production': {
-                NitrogenGas: 240,
-                EmptyFluidTank: 60
+                Resource.NitrogenGas: 240,
+                Resource.EmptyFluidTank: 60
             }
         },
         'Unpackage Oil': {
             'consumption': {
-                PackagedOil: 60
+                Resource.PackagedOil: 60
             },
             'production': {
                 CrudeOil: 60,
-                EmptyCanister: 60
+                Resource.EmptyCanister: 60
             }
         },
         'Unpackage Sulfuric Acid': {
             'consumption': {
-                PackagedSulfuricAcid: 60
+                Resource.PackagedSulfuricAcid: 60
             },
             'production': {
-                SulfuricAcid: 60,
-                EmptyCanister: 60
+                Resource.SulfuricAcid: 60,
+                Resource.EmptyCanister: 60
             }
         },
         'Unpackage Turbofuel': {
             'consumption': {
-                PackagedTurboFuel: 20
+                Resource.PackagedTurboFuel: 20
             },
             'production': {
-                Turbofuel: 20,
-                EmptyCanister: 20
+                Resource.Turbofuel: 20,
+                Resource.EmptyCanister: 20
             }
         },
         'Unpackage Water': {
             'consumption': {
-                PackagedWater: 120
+                Resource.PackagedWater: 120
             },
             'production': {
-                Water: 120,
-                EmptyCanister: 120
+                Resource.Water: 120,
+                Resource.EmptyCanister: 120
             }
         }
     }
@@ -1717,29 +1720,29 @@ class ParticleAccelerator(Machine):
     recipes = {
         'Instant Plutonium Cell': {
             'consumption': {
-                NonFissileUranium: 75,
-                AluminumCasing: 10
+                Resource.NonFissileUranium: 75,
+                Resource.AluminumCasing: 10
             },
             'production': {
-                EncasedPlutoniumCell: 10
+                Resource.EncasedPlutoniumCell: 10
             }
         },
         'Nuclear Pasta': {
             'consumption': {
-                CopperPowder: 100,
-                PressureConversionCube: 0.5
+                Resource.CopperPowder: 100,
+                Resource.PressureConversionCube: 0.5
             },
             'production': {
-                NuclearPasta: 0.5
+                Resource.NuclearPasta: 0.5
             }
         },
         'Plutonium Pellet': {
             'consumption': {
-                NonFissileUranium: 100,
-                UraniumWaste: 25
+                Resource.NonFissileUranium: 100,
+                Resource.UraniumWaste: 25
             },
             'production': {
-                PlutoniumPellet: 30
+                Resource.PlutoniumPellet: 30
             }
         }
     }
@@ -1750,49 +1753,49 @@ class Refinery(Machine):
         'Alumina Solution': {
             'consumption': {
                 Bauxite: 120,
-                Water: 180
+                Resource.Water: 180
             },
             'production': {
-                AluminaSolution: 120,
-                Silica: 50
+                Resource.AluminaSolution: 120,
+                Resource.Silica: 50
             }
         },
         'Aluminum Scrap': {
             'consumption': {
-                AluminaSolution: 240,
+                Resource.AluminaSolution: 240,
                 Coal: 120
             },
             'production': {
-                AluminumScrap: 360,
-                Water: 120
+                Resource.AluminumScrap: 360,
+                Resource.Water: 120
             }
         },
         'Coated Cable': {
             'consumption': {
-                Wire: 37.5,
-                HeavyOilResidue: 15
+                Resource.Wire: 37.5,
+                Resource.HeavyOilResidue: 15
             },
             'production': {
-                Cable: 67.5
+                Resource.Cable: 67.5
             }
         },
         'Diluted Packaged Fuel': {
             'consumption': {
-                HeavyOilResidue: 30,
-                PackagedWater: 60
+                Resource.HeavyOilResidue: 30,
+                Resource.PackagedWater: 60
             },
             'production': {
-                PackagedFuel: 60
+                Resource.PackagedFuel: 60
             }
         },
         'Electrode-Aluminum Scrap': {
             'consumption': {
-                AluminaSolution: 180,
-                PetroleumCoke: 60
+                Resource.AluminaSolution: 180,
+                Resource.PetroleumCoke: 60
             },
             'production': {
-                AluminumScrap: 300,
-                Water: 105
+                Resource.AluminumScrap: 300,
+                Resource.Water: 105
             }
         },
         'Fuel': {
@@ -1800,8 +1803,8 @@ class Refinery(Machine):
                 CrudeOil: 60
             },
             'production': {
-                Fuel: 40,
-                PolymerResin: 30
+                Resource.Fuel: 40,
+                Resource.PolymerResin: 30
             }
         },
         'Heavy Oil Residue': {
@@ -1809,25 +1812,25 @@ class Refinery(Machine):
                 CrudeOil: 30
             },
             'production': {
-                HeavyOilResidue: 40,
-                PolymerResin: 20
+                Resource.HeavyOilResidue: 40,
+                Resource.PolymerResin: 20
             }
         },
         'Liquid Biofuel': {
             'consumption': {
-                SolidBiofuel: 990,
-                Water: 45
+                Resource.SolidBiofuel: 990,
+                Resource.Water: 45
             },
             'production': {
-                LiquidBiofuel: 60
+                Resource.LiquidBiofuel: 60
             }
         },
         'Petroleum Coke': {
             'consumption': {
-                HeavyOilResidue: 40
+                Resource.HeavyOilResidue: 40
             },
             'production': {
-                PetroleumCoke: 120
+                Resource.PetroleumCoke: 120
             }
         },
         'Plastic': {
@@ -1835,17 +1838,17 @@ class Refinery(Machine):
                 CrudeOil: 30
             },
             'production': {
-                Plastic: 20,
-                HeavyOilResidue: 10
+                Resource.Plastic: 20,
+                Resource.HeavyOilResidue: 10
             }
         },
         'Polyester Fabric': {
             'consumption': {
-                PolymerResin: 30,
-                Water: 30
+                Resource.PolymerResin: 30,
+                Resource.Water: 30
             },
             'production': {
-                Fabric: 30
+                Resource.Fabric: 30
             }
         },
         'Polymer Resin': {
@@ -1853,88 +1856,88 @@ class Refinery(Machine):
                 CrudeOil: 60
             },
             'production': {
-                PolymerResin: 130,
-                HeavyOilResidue: 20
+                Resource.PolymerResin: 130,
+                Resource.HeavyOilResidue: 20
             }
         },
         'Pure Caterium Ingot': {
             'consumption': {
                 CateriumOre: 24,
-                Water: 24
+                Resource.Water: 24
             },
             'production': {
-                CateriumIngot: 12
+                Resource.CateriumIngot: 12
             }
         },
         'Pure Copper Ingot': {
             'consumption': {
                 CopperOre: 15,
-                Water: 10
+                Resource.Water: 10
             },
             'production': {
-                CopperIngot: 37.5
+                Resource.CopperIngot: 37.5
             }
         },
         'Pure Iron Ingot': {
             'consumption': {
                 IronOre: 35,
-                Water: 20
+                Resource.Water: 20
             },
             'production': {
-                IronIngot: 65
+                Resource.IronIngot: 65
             }
         },
         'Pure Quartz Crystal': {
             'consumption': {
                 RawQuartz: 67.5,
-                Water: 37.5
+                Resource.Water: 37.5
             },
             'production': {
-                QuartzCrystal: 52.5
+                Resource.QuartzCrystal: 52.5
             }
         },
         'Recycled Plastic': {
             'consumption': {
-                Rubber: 30,
-                Fuel: 30
+                Resource.Rubber: 30,
+                Resource.Fuel: 30
             },
             'production': {
-                Plastic: 60
+                Resource.Plastic: 60
             }
         },
         'Recycled Rubber': {
             'consumption': {
-                Plastic: 30,
-                Fuel: 30
+                Resource.Plastic: 30,
+                Resource.Fuel: 30
             },
             'production': {
-                Rubber: 60
+                Resource.Rubber: 60
             }
         },
         'Residual Fuel': {
             'consumption': {
-                HeavyOilResidue: 60
+                Resource.HeavyOilResidue: 60
             },
             'production': {
-                Fuel: 40
+                Resource.Fuel: 40
             }
         },
         'Residual Plastic': {
             'consumption': {
-                PolymerResin: 60,
-                Water: 20
+                Resource.PolymerResin: 60,
+                Resource.Water: 20
             },
             'production': {
-                Plastic: 20
+                Resource.Plastic: 20
             }
         },
         'Residual Rubber': {
             'consumption': {
-                PolymerResin: 40,
-                Water: 40
+                Resource.PolymerResin: 40,
+                Resource.Water: 40
             },
             'production': {
-                Rubber: 20
+                Resource.Rubber: 20
             }
         },
         'Rubber': {
@@ -1942,71 +1945,71 @@ class Refinery(Machine):
                 CrudeOil: 30
             },
             'production': {
-                Rubber: 20,
-                HeavyOilResidue: 20
+                Resource.Rubber: 20,
+                Resource.HeavyOilResidue: 20
             }
         },
         'Sloppy Alumina': {
             'consumption': {
                 Bauxite: 200,
-                Water: 200
+                Resource.Water: 200
             },
             'production': {
-                AluminaSolution: 240
+                Resource.AluminaSolution: 240
             }
         },
         'Smokeless Powder': {
             'consumption': {
-                BlackPowder: 20,
-                HeavyOilResidue: 10
+                Resource.BlackPowder: 20,
+                Resource.HeavyOilResidue: 10
             },
             'production': {
-                SmokelessPowder: 20
+                Resource.SmokelessPowder: 20
             }
         },
         'Steamed Copper Sheet': {
             'consumption': {
-                CopperIngot: 22.5,
-                Water: 22.5
+                Resource.CopperIngot: 22.5,
+                Resource.Water: 22.5
             },
             'production': {
-                CopperSheet: 22.5
+                Resource.CopperSheet: 22.5
             }
         },
         'Sulfuric Acid': {
             'consumption': {
                 Sulfur: 50,
-                Water: 50
+                Resource.Water: 50
             },
             'production': {
-                SulfuricAcid: 50
+                Resource.SulfuricAcid: 50
             }
         },
         'Turbo Heavy Fuel': {
             'consumption': {
-                HeavyOilResidue: 37.5,
-                CompactedCoal: 30
+                Resource.HeavyOilResidue: 37.5,
+                Resource.CompactedCoal: 30
             },
             'production': {
-                Turbofuel: 30
+                Resource.Turbofuel: 30
             }
         },
         'TurboFuel': {
             'consumption': {
-                Fuel: 22.5,
-                CompactedCoal: 15
+                Resource.Fuel: 22.5,
+                Resource.CompactedCoal: 15
             },
             'production': {
-                Turbofuel: 18.8
+                Resource.Turbofuel: 18.8
             }
         },
         'Wet Concrete': {
             'consumption': {
                 Limestone: 120,
-                Water: 100
+                Resource.Water: 100
             },
             'production': {
-                Concrete: 80
+                Resource.Concrete: 80
             }
         },
     }
@@ -2019,7 +2022,7 @@ class Smelter(Machine):
                 CateriumOre: 45
             },
             'production': {
-                CateriumIngot: 15
+                Resource.CateriumIngot: 15
             }
         },
         'Copper Ingot': {
@@ -2027,7 +2030,7 @@ class Smelter(Machine):
                 CopperOre: 30
             },
             'production': {
-                CopperIngot: 30
+                Resource.CopperIngot: 30
             }
         },
         'Iron Ingot': {
@@ -2035,15 +2038,15 @@ class Smelter(Machine):
                 IronOre: 30
             },
             'production': {
-                IronIngot: 30
+                Resource.IronIngot: 30
             }
         },
         'Pure Aluminum Ingot': {
             'consumption': {
-                AluminumScrap: 30
+                Resource.AluminumScrap: 30
             },
             'production': {
-                AluminumIngot: 30
+                Resource.AluminumIngot: 30
             }
         }
     }

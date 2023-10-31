@@ -1,5 +1,5 @@
 from pyvis.network import Network
-from ..Factory.Factory import Factory, Miner, OilExtractor
+from ..Factory.Factory import Factory
 
 
 class Session:

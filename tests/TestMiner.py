@@ -59,7 +59,7 @@ class TestMiner(unittest.TestCase):
     def test_invalid_marks(self):
         for test_value in [0, 4, 1.1, 'a']:
             with self.assertRaises(ValueError):
-                miner = Miner(test_value, IronOre('Impure'))
+                Miner(test_value, IronOre('Impure'))
 
 
 if __name__ == '__main__':

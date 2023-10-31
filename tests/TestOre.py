@@ -48,5 +48,6 @@ class TestOre(unittest.TestCase):
         with self.assertRaises(KeyError):
             ore = Ore('Invalid Input')
 
+
 if __name__ == '__main__':
     unittest.main()
