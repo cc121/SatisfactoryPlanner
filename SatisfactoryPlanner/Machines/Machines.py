@@ -1528,6 +1528,191 @@ class Manufacturer(Machine):
     }
 
 
+class Packager(Machine):
+    recipes = {
+        'Packaged Alumina Solution': {
+            'consumption': {
+                AluminaSolution: 120,
+                EmptyCanister: 120
+            },
+            'production': {
+                PackagedAluminaSolution: 120
+            }
+        },
+        'Packaged Fuel': {
+            'consumption': {
+                Fuel: 40,
+                EmptyCanister: 40
+            },
+            'production': {
+                PackagedFuel: 40
+            }
+        },
+        'Packaged Heavy Oil Residue': {
+            'consumption': {
+                HeavyOilResidue: 30,
+                EmptyCanister: 30
+            },
+            'production': {
+                PackagedHeavyOilResidue: 30
+            }
+        },
+        'Packaged Liquid Biofuel': {
+            'consumption': {
+                LiquidBiofuel: 40,
+                EmptyCanister: 40
+            },
+            'production': {
+                PackagedLiquidBiofuel: 40
+            }
+        },
+        'Packaged Nitric Acid': {
+            'consumption': {
+                NitricAcid: 30,
+                EmptyFluidTank: 30
+            },
+            'production': {
+                PackagedNitricAcid: 30
+            }
+        },
+        'Packaged Nitrogen Gas': {
+            'consumption': {
+                NitrogenGas: 240,
+                EmptyFluidTank: 60
+            },
+            'production': {
+                PackagedNitrogenGas: 60
+            }
+        },
+        'Packaged Oil': {
+            'consumption': {
+                CrudeOil: 30,
+                EmptyCanister: 30
+            },
+            'production': {
+                PackagedOil: 30
+            }
+        },
+        'Packaged Sulfuric Acid': {
+            'consumption': {
+                SulfuricAcid: 40,
+                EmptyCanister: 40
+            },
+            'production': {
+                PackagedSulfuricAcid: 40
+            }
+        },
+        'Packaged Turbofuel': {
+            'consumption': {
+                Turbofuel: 20,
+                EmptyCanister: 20
+            },
+            'production': {
+                PackagedTurboFuel: 20
+            }
+        },
+        'Packaged Water': {
+            'consumption': {
+                Water: 60,
+                EmptyCanister: 60
+            },
+            'production': {
+                PackagedWater: 60
+            }
+        },
+        'Unpackage Alumina Solution': {
+            'consumption': {
+                PackagedAluminaSolution: 120
+            },
+            'production': {
+                AluminaSolution: 120,
+                EmptyCanister: 120
+            }
+        },
+        'Unpackage Fuel': {
+            'consumption': {
+                PackagedFuel: 60
+            },
+            'production': {
+                Fuel: 60,
+                EmptyCanister: 60
+            }
+        },
+        'Unpackage Heavy Oil Residue': {
+            'consumption': {
+                PackagedHeavyOilResidue: 20
+            },
+            'production': {
+                HeavyOilResidue: 20,
+                EmptyCanister: 20
+            }
+        },
+        'Unpackage Liquid Biofuel': {
+            'consumption': {
+                PackagedLiquidBiofuel: 60
+            },
+            'production': {
+                LiquidBiofuel: 60,
+                EmptyCanister: 60
+            }
+        },
+        'Unpackage Nitric Acid': {
+            'consumption': {
+                PackagedNitricAcid: 20
+            },
+            'production': {
+                NitricAcid: 20,
+                EmptyFluidTank: 20
+            }
+        },
+        'Unpackage Nitrogen Gas': {
+            'consumption': {
+                PackagedNitrogenGas: 60
+            },
+            'production': {
+                NitrogenGas: 240,
+                EmptyFluidTank: 60
+            }
+        },
+        'Unpackage Oil': {
+            'consumption': {
+                PackagedOil: 60
+            },
+            'production': {
+                CrudeOil: 60,
+                EmptyCanister: 60
+            }
+        },
+        'Unpackage Sulfuric Acid': {
+            'consumption': {
+                PackagedSulfuricAcid: 60
+            },
+            'production': {
+                SulfuricAcid: 60,
+                EmptyCanister: 60
+            }
+        },
+        'Unpackage Turbofuel': {
+            'consumption': {
+                PackagedTurboFuel: 20
+            },
+            'production': {
+                Turbofuel: 20,
+                EmptyCanister: 20
+            }
+        },
+        'Unpackage Water': {
+            'consumption': {
+                PackagedWater: 120
+            },
+            'production': {
+                Water: 120,
+                EmptyCanister: 120
+            }
+        }
+    }
+
+
 class ParticleAccelerator(Machine):
     recipes = {
         'Instant Plutonium Cell': {
@@ -1558,6 +1743,8 @@ class ParticleAccelerator(Machine):
             }
         }
     }
+
+
 class Refinery(Machine):
     recipes = {
         'Alumina Solution': {

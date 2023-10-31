@@ -280,11 +280,35 @@ class NukeNobelisk(Resource):
     pass
 
 
+class PackagedAluminaSolution(Resource):
+    pass
+
+
 class PackagedFuel(Resource):
     pass
 
 
+class PackagedHeavyOilResidue(Resource):
+    pass
+
+
+class PackagedLiquidBiofuel(Resource):
+    pass
+
+
+class PackagedNitricAcid(Resource):
+    pass
+
+
 class PackagedNitrogenGas(Resource):
+    pass
+
+
+class PackagedOil(Resource):
+    pass
+
+
+class PackagedSulfuricAcid(Resource):
     pass
 
 
