@@ -272,6 +272,10 @@ class NonFissileUranium(Resource):
     pass
 
 
+class NuclearPasta(Resource):
+    pass
+
+
 class NukeNobelisk(Resource):
     pass
 
