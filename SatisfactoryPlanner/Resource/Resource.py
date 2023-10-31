@@ -1,5 +1,6 @@
 class Resource:
     SINKABLE = True
+
     @classmethod
     def get_name(cls):
         return cls.__name__

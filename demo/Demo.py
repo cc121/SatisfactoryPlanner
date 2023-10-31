@@ -5,7 +5,8 @@ from SatisfactoryPlanner.Resource.Ore import Coal, CopperOre, IronOre, Limestone
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from SatisfactoryPlanner.Factory.Factory import Miner, Factory, OilExtractor
-from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler, Foundry, Manufacturer, Refinery, FuelGenerator
+from SatisfactoryPlanner.Machines.Machines import Smelter, Constructor, Assembler, Foundry, Manufacturer, Refinery, \
+    FuelGenerator
 from SatisfactoryPlanner.Session.Session import Session
 
 
@@ -559,4 +560,3 @@ if __name__ == '__main__':
     se3_factory, mf, rf, cf, hmff = build_space_elevator_3_factory(se1_factory, se2_factory, sff, sf, rot_f, ripf, mff)
     session.add_factories(se3_factory, mf, rf, cf, hmff)
     session.visualize_factory_relationships('Tier 3.html')
-

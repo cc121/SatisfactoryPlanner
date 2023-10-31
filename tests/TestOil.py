@@ -48,5 +48,6 @@ class TestOil(unittest.TestCase):
         with self.assertRaises(KeyError):
             oil = Oil('Invalid Input')
 
+
 if __name__ == '__main__':
     unittest.main()

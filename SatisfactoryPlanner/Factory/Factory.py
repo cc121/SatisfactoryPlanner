@@ -29,20 +29,8 @@ class Factory:
                 if resource in source_capacity:
                     # The source was available in the source, check how much of its capacity we
                     # need to consume
-                    available_capacity = source_capacity[resource]
-
-                    remaining_capacity = desired_capacity - available_capacity
-                    if remaining_capacity >= 0:
-                        # We consumed all the available capacity with no capacity left from
-                        # the input source
-                        input_source.consume_capacity(resource, available_capacity)
-                        desired_capacity = remaining_capacity
-                    else:
-                        # There is available capacity left from the source and we didn't have to
-                        # consume it all
-                        input_source.consume_capacity(resource, desired_capacity)
-                        desired_capacity = 0
-
+                    desired_capacity = self.consume_source_capacity(desired_capacity, input_source, resource,
+                                                                    source_capacity)
                     if desired_capacity == 0:
                         break
             else:
@@ -50,26 +38,15 @@ class Factory:
                 # NOTE: This means factories prefer to consume imported resources than produce them
                 # in-house where it can be avoided.
                 if resource in self.capacity:
-                    available_capacity = self.capacity[resource]
-
-                    remaining_capacity = desired_capacity - available_capacity
-                    if remaining_capacity >= 0:
-                        # We consumed all the available capacity with no capacity left in the factory
-                        self.consume_capacity(resource, available_capacity)
-                        self.consume_production(resource, available_capacity)
-                        desired_capacity = remaining_capacity
-                    else:
-                        # There is available capacity left in the factory and we didn't have to
-                        # consume it all
-                        self.consume_capacity(resource, desired_capacity)
-                        self.consume_production(resource, desired_capacity)
-                        desired_capacity = 0
+                    desired_capacity = self.consume_internal_capacity(desired_capacity, resource)
 
                     if desired_capacity != 0 and not machine.get_allow_undersupply():
-                        raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need {desired_capacity}/minute more.")
+                        raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need "
+                                         f"{desired_capacity}/minute more.")
                 else:
                     if not machine.get_allow_undersupply():
-                        raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need {desired_capacity}/minute more.")
+                        raise ValueError(f"Not enough capacity found in sources for {resource.get_name()}! Need "
+                                         f"{desired_capacity}/minute more.")
 
         # Update factory output consumption
         for resource, output_capacity in machine.get_production_rates().items():
@@ -83,6 +60,37 @@ class Factory:
 
         # Add the machine to our tracking
         self.machines.append(machine)
+
+    def consume_internal_capacity(self, desired_capacity, resource):
+        available_capacity = self.capacity[resource]
+        remaining_capacity = desired_capacity - available_capacity
+        if remaining_capacity >= 0:
+            # We consumed all the available capacity with no capacity left in the factory
+            self.consume_capacity(resource, available_capacity)
+            self.consume_production(resource, available_capacity)
+            desired_capacity = remaining_capacity
+        else:
+            # There is available capacity left in the factory and we didn't have to
+            # consume it all
+            self.consume_capacity(resource, desired_capacity)
+            self.consume_production(resource, desired_capacity)
+            desired_capacity = 0
+        return desired_capacity
+
+    def consume_source_capacity(self, desired_capacity, input_source, resource, source_capacity):
+        available_capacity = source_capacity[resource]
+        remaining_capacity = desired_capacity - available_capacity
+        if remaining_capacity >= 0:
+            # We consumed all the available capacity with no capacity left from
+            # the input source
+            input_source.consume_capacity(resource, available_capacity)
+            desired_capacity = remaining_capacity
+        else:
+            # There is available capacity left from the source and we didn't have to
+            # consume it all
+            input_source.consume_capacity(resource, desired_capacity)
+            desired_capacity = 0
+        return desired_capacity
 
     # def remove_machine(self):
     #     """
