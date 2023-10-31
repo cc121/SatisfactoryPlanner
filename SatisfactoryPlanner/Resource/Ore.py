@@ -43,7 +43,7 @@ class RawQuartz(Ore):
 
 
 class SAM(Ore):
-    pass
+    SINKABLE = False
 
 
 class Sulfur(Ore):

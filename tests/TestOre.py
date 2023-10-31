@@ -2,7 +2,7 @@ import unittest
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from SatisfactoryPlanner.Resource.Ore import Ore, SAMOre
+from SatisfactoryPlanner.Resource.Ore import Ore, SAM
 
 
 class TestOre(unittest.TestCase):
@@ -47,6 +47,10 @@ class TestOre(unittest.TestCase):
 
         with self.assertRaises(KeyError):
             Ore('Invalid Input')
+
+    def test_unsinkable(self):
+        for unsinkable_resource in [SAM]:
+            self.assertEqual(unsinkable_resource.get_sinkable(), False)
 
 
 if __name__ == '__main__':
