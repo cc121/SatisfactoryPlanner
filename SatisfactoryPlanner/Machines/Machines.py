@@ -1,5 +1,5 @@
 from ..Resource.Oil import CrudeOil
-from ..Resource.Ore import Bauxite, CateriumOre, Coal, CopperOre, IronOre, Limestone, RawQuartz, Sulfur, Uranium
+from ..Resource.Ore import Bauxite, CateriumOre, Coal, CopperOre, IronOre, Limestone, NitrogenGas, RawQuartz, Sulfur, Uranium
 from ..Resource import Resource
 
 
@@ -59,7 +59,7 @@ class Assembler(Machine):
         'Alclad Aluminum Sheet': {
             'consumption': {
                 Resource.AluminumIngot: 30,
-                Resource.CopperSheet: 10
+                Resource.CopperIngot: 10
             },
             'production': {
                 Resource.AlcladAluminumSheet: 30
@@ -580,7 +580,7 @@ class Blender(Machine):
             'consumption': {
                 Resource.HeatSink: 9.375,
                 Resource.Motor: 1.875,
-                Resource.NitrogenGas: 45
+                NitrogenGas: 45
             },
             'production': {
                 Resource.CoolingSystem: 3.8
@@ -591,7 +591,7 @@ class Blender(Machine):
                 Resource.HeatSink: 12,
                 Resource.Rubber: 12,
                 Resource.Water: 30,
-                Resource.NitrogenGas: 150
+                NitrogenGas: 150
             },
             'production': {
                 Resource.CoolingSystem: 6
@@ -633,7 +633,7 @@ class Blender(Machine):
             'consumption': {
                 Resource.HeavyModularFrame: 1.5,
                 Resource.AluminumCasing: 75,
-                Resource.NitrogenGas: 37.5
+                NitrogenGas: 37.5
             },
             'production': {
                 Resource.FusedModularFrame: 1.5
@@ -664,7 +664,7 @@ class Blender(Machine):
         },
         'Nitric Acid': {
             'consumption': {
-                Resource.NitrogenGas: 120,
+                NitrogenGas: 120,
                 Resource.Water: 30,
                 Resource.IronPlate: 10
             },
@@ -1420,7 +1420,7 @@ class Manufacturer(Machine):
                 Resource.Motor: 7.5
             }
         },
-        'Silicon High-Speeed Connector': {
+        'Silicon High-Speed Connector': {
             'consumption': {
                 Resource.Quickwire: 90,
                 Resource.Silica: 37.5,
@@ -1580,7 +1580,7 @@ class Packager(Machine):
         },
         'Packaged Nitrogen Gas': {
             'consumption': {
-                Resource.NitrogenGas: 240,
+                NitrogenGas: 240,
                 Resource.EmptyFluidTank: 60
             },
             'production': {
@@ -1673,7 +1673,7 @@ class Packager(Machine):
                 Resource.PackagedNitrogenGas: 60
             },
             'production': {
-                Resource.NitrogenGas: 240,
+                NitrogenGas: 240,
                 Resource.EmptyFluidTank: 60
             }
         },

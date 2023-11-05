@@ -38,6 +38,16 @@ class Limestone(Ore):
     pass
 
 
+class NitrogenGas(Ore):
+    def __init__(self, purity):
+        purity_modifier_table = {
+            "Impure": 1,
+            "Normal": 2,
+            "Pure": 3
+        }
+        self.purity_modifier = purity_modifier_table[purity]
+
+
 class RawQuartz(Ore):
     pass
 

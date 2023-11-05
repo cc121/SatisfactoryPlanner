@@ -265,10 +265,6 @@ class NitricAcid(Resource):
     SINKABLE = False
 
 
-class NitrogenGas(Resource):
-    SINKABLE = False
-
-
 class Nobelisk(Resource):
     pass
 

@@ -1,6 +1,6 @@
 from typing import List
 from typing_extensions import Self
-from ..Resource.Resource import Resource
+from ..Resource.Resource import Resource, Water
 from ..Resource.Oil import CrudeOil
 from ..Machines.Machines import Machine
 
@@ -13,7 +13,7 @@ class Factory:
         self.machines = []
         self.name = name
 
-    def add_machine(self, machine: Machine) -> None:
+    def add_machine(self, machine: Machine, *output_resources) -> None:
         """
         Add a machine to the factory.
         :return:
@@ -25,7 +25,7 @@ class Factory:
         for resource, desired_capacity in machine.get_consumption_rates().items():
             # Check our available sources for the resource we need
             for input_source in self.input_sources:
-                source_capacity = input_source.get_capacity()
+                source_capacity = input_source.get_internal_capacity()
                 if resource in source_capacity:
                     # The source was available in the source, check how much of its capacity we
                     # need to consume
@@ -50,9 +50,9 @@ class Factory:
 
         # Update factory output consumption
         for resource, output_capacity in machine.get_production_rates().items():
-            current_capacity = self.capacity.get(resource, 0)
+            current_capacity = self.capacity.get(resource, {}).get('capacity', 0)
             current_capacity += output_capacity
-            self.capacity[resource] = current_capacity
+            self.capacity[resource] = {'capacity': current_capacity, 'output': resource in output_resources}
 
             current_production = self.production.get(resource, 0)
             current_production += output_capacity
@@ -62,7 +62,7 @@ class Factory:
         self.machines.append(machine)
 
     def consume_internal_capacity(self, desired_capacity, resource):
-        available_capacity = self.capacity[resource]
+        available_capacity = self.capacity[resource]['capacity']
         remaining_capacity = desired_capacity - available_capacity
         if remaining_capacity >= 0:
             # We consumed all the available capacity with no capacity left in the factory
@@ -78,7 +78,7 @@ class Factory:
         return desired_capacity
 
     def consume_source_capacity(self, desired_capacity, input_source, resource, source_capacity):
-        available_capacity = source_capacity[resource]
+        available_capacity = source_capacity[resource]['capacity']
         remaining_capacity = desired_capacity - available_capacity
         if remaining_capacity >= 0:
             # We consumed all the available capacity with no capacity left from
@@ -113,6 +113,17 @@ class Factory:
     #     '''
     #     pass
 
+    def get_internal_capacity(self) -> dict:
+        """
+        Gets the current output capacity of the factory.
+        :return:
+        """
+        # Check that all the liquids in the factory are being used.
+        for resource, capacity in self.capacity.items():
+            if not resource.get_sinkable() and capacity['capacity'] > 0:
+                raise ValueError(f'Unsunk {resource.get_name()}! \n {capacity["capacity"]} remaining capacity to sink.')
+        return self.capacity
+
     def get_capacity(self) -> dict:
         """
         Gets the current output capacity of the factory.
@@ -122,7 +133,7 @@ class Factory:
         for resource, capacity in self.capacity.items():
             if not resource.get_sinkable() and capacity > 0:
                 raise ValueError(f'Unsunk {resource.get_name()}! \n {capacity} remaining capacity to sink.')
-        return self.capacity
+        return {key: item for key, item in self.capacity.items() if item['output']}
 
     def get_production(self) -> dict:
         return self.production
@@ -132,13 +143,13 @@ class Factory:
         Consume available capacity from available output.
         :return:
         """
-        current_capacity = self.capacity[resource]
+        current_capacity = self.capacity[resource]['capacity']
 
         current_capacity -= quantity
         if current_capacity < 0:
             raise ValueError(f"Capacity of {resource.get_name()} exceeded!")
         else:
-            self.capacity[resource] = current_capacity
+            self.capacity[resource]['capacity'] = current_capacity
 
     # def return_capacity(self):
     #     """
@@ -175,7 +186,7 @@ class Miner(Factory):
 
         self.resource = resource
         self.rate = rate
-        self.capacity[resource.get_class()] = rate
+        self.capacity[resource.get_class()] = {'capacity': rate, 'output': True}
 
     @staticmethod
     def calculate_rate(mark: int, resource: Resource) -> int:
@@ -217,12 +228,66 @@ class OilExtractor(Factory):
         rate = 60 * 2**(resource.get_purity_modifier()-1)
 
         self.rate = rate
-        self.capacity[resource.get_class()] = rate
+        self.capacity[resource.get_class()] = {'capacity': rate, 'output': True}
 
     def get_capacity(self) -> dict:
         # Miners don't produce liquids, so they don't check for unsinkable resources
         # like a Factory does
         return self.capacity
 
+    def get_internal_capacity(self) -> dict:
+        """
+        Gets the current output capacity of the factory.
+        :return:
+        """
+        return self.get_capacity()
+
     def get_production(self) -> dict:
         return {CrudeOil: self.rate}
+
+
+class ResourceWellExtractor(Factory):
+    """
+    A variation of a factory that simply produces an output without an input.
+    """
+    def __init__(self, resource: Resource) -> None:
+        super().__init__(f"{resource.get_name()} Extractor")
+        purity_modifier = resource.get_purity_modifier()
+        rate = 30 * 2**(purity_modifier-1)
+
+        self.resource = resource
+        self.rate = rate
+        self.capacity[resource.get_class()] = {'capacity': rate, 'output': True}
+
+    def get_capacity(self) -> dict:
+        # Miners don't produce liquids, so they don't check for unsinkable resources
+        # like a Factory does
+        return self.capacity
+
+
+class WaterExtractor(Factory):
+    """
+    A variation of a factory that simply produces an output without an input.
+    """
+    def __init__(self) -> None:
+        super().__init__("Water Extractor")
+
+        rate = 120
+
+        self.rate = rate
+        self.capacity[Water] = {'capacity': rate, 'output': True}
+
+    def get_capacity(self) -> dict:
+        # Miners don't produce liquids, so they don't check for unsinkable resources
+        # like a Factory does
+        return self.capacity
+
+    def get_internal_capacity(self) -> dict:
+        """
+        Gets the current output capacity of the factory.
+        :return:
+        """
+        return self.get_capacity()
+
+    def get_production(self) -> dict:
+        return {Water: self.rate}
